@@ -32,7 +32,7 @@ module.exports = {
       title: 'rm-controls Tutorial',
       logo: {
         alt: 'My Site Logo',
-        src: 'img/logo.png',
+        src: 'img/logo.svg',
       },
       items: [
         {
@@ -42,9 +42,14 @@ module.exports = {
           label: 'Docs',
         },
         {
-          href: 'https://github.com/rm-controls/',
-          label: 'GitHub',
+          type: 'localeDropdown',
           position: 'right',
+        },
+        {
+          href: 'https://github.com/rm-controls',
+          position: 'right',
+          className: 'header-github-link',
+          'aria-label': 'GitHub repository',
         },
       ],
     },
