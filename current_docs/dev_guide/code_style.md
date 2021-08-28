@@ -38,7 +38,9 @@
  - 弃用函数使用 C++14 [ ``[[deprecated]]`` ](https://en.cppreference.com/w/cpp/language/attributes/deprecated) 属性
  - 添加一条有用的消息来描述如何处理这种情况：
 
-        [[deprecated("use bar instead")]] void foo() {}
+```cpp
+[[deprecated("use bar instead")]] void foo() {}
+```
 
    这将导致：
 
@@ -89,16 +91,19 @@ clang-format 需要在 catkin 工作区的根目录下有一个配置文件，rm
 
 有时， clang-format 使用的自动格式化可能没有意义，例如 用于在单独的行上更容易阅读的项目列表。 它可以用以下命令覆盖：
 
-    // clang-format off
-    ... some untouched code
-    // clang-format on
+```cpp
+// clang-format off
+... some untouched code
+// clang-format on
+```
 
 不过请谨慎使用。
 
-> [!Tip]
->
-> 使用命令行太头疼了? 试试 [CLion IDE 配置 ](./ide_config).
+:::tip
 
+使用命令行太头疼了? 试试 [CLion IDE 配置 ](./ide_config).
+
+:::
 
 ## clang-tidy Linting
 
@@ -133,15 +138,16 @@ catkin config --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_CXX_CLANG_
 catkin build
 ```
 
-> [!Tip]
->
-> 使用命令行太头疼了? [CLion IDE 自带 clang-tidy](https://www.jetbrains.com/help/clion/clang-tidy-checks-support.html)，直接使用即可。
+:::tip
 
+使用命令行太头疼了? [CLion IDE 自带 clang-tidy](https://www.jetbrains.com/help/clion/clang-tidy-checks-support.html)，直接使用即可。
+
+:::
 
 ### clang-tidy的例外
 
 可以通过使用 **NOLINT** 或 **NOLINTNEXTLINE** 注释来抑制不需要的 clang-tidy 检查。 请在注释后的括号中明确指定check的名称：
-```c++
+```cpp
 const IKCallbackFn solution_callback = 0; // NOLINT(modernize-use-nullptr)
 
 // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
@@ -150,7 +156,8 @@ robot_state::RobotState robot_state(default_state);
 请注意，`modernize-loop-convert` 检查可能会将 `for (...; ...; ...)` 循环转换为 `for (auto & ... : ...)`。
 然而，`auto` 有时候不是一个高度可读的表达式。
 如果它不能立即从上下文中变得清晰，请明确指定变量类型：
-```c++
+
+```cpp
 for (const int & item : container)
   std::cout << item;
 ```
