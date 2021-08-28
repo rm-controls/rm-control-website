@@ -1,5 +1,5 @@
 {
-  "name": "rm-controls-tutorial",
+  "name": "rm-controls-docs",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -17,6 +17,7 @@
   "dependencies": {
     "@docusaurus/core": "2.0.0-beta.5",
     "@docusaurus/preset-classic": "2.0.0-beta.5",
+    "@easyops-cn/docusaurus-search-local": "^0.18.1",
     "@mdx-js/react": "^1.6.21",
     "@svgr/webpack": "^5.5.0",
     "clsx": "^1.1.1",

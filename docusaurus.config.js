@@ -11,7 +11,7 @@ module.exports = {
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'rm-controls',
-  projectName: 'test-docs',
+  projectName: 'rm-controls-docs',
   trailingSlash: false,
   i18n: {
     defaultLocale: 'zh-cn',
@@ -52,6 +52,11 @@ module.exports = {
           'aria-label': 'GitHub repository',
         },
       ],
+      hideOnScroll: true,
+    },
+    footer: {
+      style: 'dark',
+      copyright: `Copyright © ${new Date().getFullYear()}. Distributed by BSD 3-Clause License`,
     },
     prism: {
       theme: lightCodeTheme,
@@ -77,6 +82,16 @@ module.exports = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
+      },
+    ],
+  ],
+  plugins: [
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      {
+        hashed: true,
+        language: ["en", "zh"],
+        docsRouteBasePath: "/docs/",
       },
     ],
   ],
