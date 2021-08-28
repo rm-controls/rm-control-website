@@ -1,20 +1,20 @@
 # 硬件规格
-根据视觉识别要求, 我们提供了三套主控解决方案:
+## CAN 总线
+### 內置 CAN 
+Jetson AGX Xavier/NX/TX2 和 妙算2-G（TX2）都具有两个 build-in 的 CAN 总线接口。下图中 **9** 展示了 妙算2 的内置CAN的物理接口位置。
 
-[![硬件方案](https://s1.ax1x.com/2020/10/24/BVWKXR.png)](https://imgchr.com/i/BVWKXR)
+![manifold2](/img/hardware_specifications/manifold2.png) 
 
-1. Jetson 系列: 深度学习视觉算法
-   * 内置CAN
-   * 内置GPIO
+下图展示了自制的 Jetson AGX Xavier 接线板。
 
-2. Intel NUC: 传统视觉算法
-   * USB转CAN (Candlelight)
-   * CAN转GPIO
+![jeston_agx](/img/hardware_specifications/jeston_agx.jpg) 
 
-3. UP Board: 无视觉算法
-   * SPI转CAN (MCP2515)
-   * 内置GPIO
+上述的方式都可以很方便地通过 Linux 主线提供的 SocketCAN 机制使用CAN接口。
+### USB 转 CAN
+我们还给 Intel NUC 和队员的调试电脑开发了 [USB 转 CAN 模块](https://github.com/rm-controls/rm_usb2can) ，该模块的驱动已经被包含进 Linux 主线，仅需插上就可以通过 SocketCAN 访问 CAN。
+下图展示了：使用 NUC [主板上的 USB 1.25mm 端子](https://www.intel.com/content/www/us/en/support/articles/000006933/intel-nuc.html) 稳定连接 USB 转 CAN 模块。
+![Intel NUC with usb2can](/img/hardware_specifications/nuc_with_usb2can.jpg) 
 
-> [!Note]
-> 
-> CAN总线最大延迟均在1ms内, 满足RM要求.
+## 其他接口
+GPIO、PWM、I2C 接口正在开发中，详见 [road map](TODO)。
+##
