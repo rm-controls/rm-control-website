@@ -7,7 +7,7 @@ module.exports = {
   tagline: '',
   url: 'https://rm-controls.github.io',
   baseUrl: '/test-docs/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'rm-controls',
