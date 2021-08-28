@@ -1490,7 +1490,7 @@
     "@docusaurus/types" "2.0.0-beta.5"
     tslib "^2.2.0"
 
-"@docusaurus/utils-validation@2.0.0-beta.5", "@docusaurus/utils-validation@^2.0.0-beta.0":
+"@docusaurus/utils-validation@2.0.0-beta.5", "@docusaurus/utils-validation@^2.0.0-beta.4":
   version "2.0.0-beta.5"
   resolved "https://registry.yarnpkg.com/@docusaurus/utils-validation/-/utils-validation-2.0.0-beta.5.tgz#fe7efefdb518bc19fb6cb9c79492bd84cfc4a59a"
   integrity sha512-VWj1BRYejcGewWP3BKSm3a5dVzQWA9w9MDQUCylR2NxywOxonoUPo9nz5g9bN+C3rwuelfA5u3MORu2q2+rbLw==
@@ -1500,7 +1500,7 @@
     joi "^17.4.0"
     tslib "^2.1.0"
 
-"@docusaurus/utils@2.0.0-beta.5", "@docusaurus/utils@^2.0.0-beta.0":
+"@docusaurus/utils@2.0.0-beta.5", "@docusaurus/utils@^2.0.0-beta.4":
   version "2.0.0-beta.5"
   resolved "https://registry.yarnpkg.com/@docusaurus/utils/-/utils-2.0.0-beta.5.tgz#68859f070ca6bf7875f4a4121e314269211a876b"
   integrity sha512-hIzuARFMqXqljTdbF19bYRw+fqqK2gHlzepeC9uJfLLaGmirPFDPjr+BN9oiajBhNx2CgvJVl/66lEx4hrd7uQ==
@@ -1525,13 +1525,13 @@
     cssesc "^3.0.0"
     immediate "^3.2.3"
 
-"@easyops-cn/docusaurus-search-local@^0.18.1":
-  version "0.18.1"
-  resolved "https://registry.yarnpkg.com/@easyops-cn/docusaurus-search-local/-/docusaurus-search-local-0.18.1.tgz#f28838d9f175d977c1095ffd5245a4c8bcbe0055"
-  integrity sha512-QVvqmOtzhi+YjBSmTQlXkNkT3Y2+AuxKvNRZtinC9BUJAMcQgLkLAun8o11H9wA567nggqda11d7i5/mKFNOag==
+"@easyops-cn/docusaurus-search-local@^0.19.1":
+  version "0.19.1"
+  resolved "https://registry.yarnpkg.com/@easyops-cn/docusaurus-search-local/-/docusaurus-search-local-0.19.1.tgz#cd0673624e6901a384f4cf1c289f18ec360734db"
+  integrity sha512-iBtFxP7y/eLuUABa7ODqn/RNcrWiao/LW5HiEjM56RR5hlOXjML5GmDwVdcazZHuPhR8K0sOjZE33vLRUFdCog==
   dependencies:
-    "@docusaurus/utils" "^2.0.0-beta.0"
-    "@docusaurus/utils-validation" "^2.0.0-beta.0"
+    "@docusaurus/utils" "^2.0.0-beta.4"
+    "@docusaurus/utils-validation" "^2.0.0-beta.4"
     "@easyops-cn/autocomplete.js" "^0.38.1"
     cheerio "^1.0.0-rc.3"
     clsx "^1.1.1"

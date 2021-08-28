@@ -71,12 +71,10 @@ module.exports = {
           path: 'current_docs',
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
           editUrl: 'https://github.com/rm-controls/rm-controls-docs',
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
           editUrl:
             'https://github.com/rm-controls/rm-controls-docs',
         },
@@ -92,7 +90,9 @@ module.exports = {
       {
         hashed: true,
         language: ["en", "zh"],
-        docsRouteBasePath: "/docs/",
+        docsRouteBasePath: "/",
+        docsDir: "current_docs",
+        indexBlog: false,
       },
     ],
   ],
