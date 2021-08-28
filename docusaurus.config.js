@@ -28,6 +28,11 @@ module.exports = {
     },
   },
   themeConfig: {
+    announcementBar: {
+      id: 'star',
+      content:
+          '⭐️ If you like rm-controls, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/rm-controls/rm_control">rm_control</a> and <a target="_blank" rel="noopener noreferrer" href="https://github.com/rm-controls/rm_control">rm_controllers</a> ! ⭐️',
+    },
     navbar: {
       title: 'rm-controls',
       logo: {
