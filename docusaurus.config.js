@@ -3,7 +3,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'rm-controls Tutorial',
+  title: 'rm-controls documentation',
   tagline: '',
   url: 'https://rm-controls.github.io',
   baseUrl: '/rm-controls-docs/',
