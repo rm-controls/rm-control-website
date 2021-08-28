@@ -27,11 +27,12 @@ In addition rm-controls has some extra style preferences:
  - Deprecate functions using C++14 [ ``[[deprecated]]`` ](https://en.cppreference.com/w/cpp/language/attributes/deprecated) attribute
  - Add a useful message describing how to handle the situation:
 
-        [[deprecated("use bar instead")]] void foo() {}
+```cpp
+[[deprecated("use bar instead")]] void foo() {}
+```
+Which will result in:
 
-   Which will result in:
-
-         warning: 'foo' is deprecated: use bar instead [-Wdeprecated-declarations] foo(); ^ note: 'foo' has been explicitly marked deprecated here void foo() {} ^
+   warning: 'foo' is deprecated: use bar instead [-Wdeprecated-declarations] foo(); ^ note: 'foo' has been explicitly marked deprecated here void foo() {} ^
 
  - Add an associated TODO describing when to remove the feature (date and/or ROS version)
 
@@ -91,16 +92,19 @@ Format an entire directory recursively including subfolders:
 
 Occasionally the auto formatting used by clang-format might not make sense e.g. for lists of items that are easier to read on separate lines. It can be overwritten with the commands:
 
-    // clang-format off
-    ... some untouched code
-    // clang-format on
+```cpp
+// clang-format off
+... some untouched code
+// clang-format on
+```
 
 Use this sparingly though.
 
-> [!Tip]
->
+:::tip
+
 > The command Line tools are troublesome? Try [CLion IDE Configuration].
 
+:::
 
 ## clang-tidy Linting
 
@@ -139,24 +143,28 @@ catkin config --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_CXX_CLANG_
 catkin build
 ```
 
-> [!Tip]
->
-> The command Line tools are troublesome? The CLion IDE has [Clang-Tidy integration](https://www.jetbrains.com/help/clion/clang-tidy-checks-support.html).
+:::tip
 
+The command Line tools are troublesome? The CLion IDE has [Clang-Tidy integration](https://www.jetbrains.com/help/clion/clang-tidy-checks-support.html).
+
+:::
 
 ### Exceptions to clang-tidy
 
 It is possible to suppress undesired clang-tidy checks by using **NOLINT** or **NOLINTNEXTLINE** comments. Please specify the check names explicitly in parentheses following the comments:
-```c++
+
+```cpp
 const IKCallbackFn solution_callback = 0; // NOLINT(modernize-use-nullptr)
 
 // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
 robot_state::RobotState robot_state(default_state);
 ```
+
 Note that `modernize-loop-convert` check may convert `for (...; ...; ...)` loops to `for (auto & ... : ...)`.
 However, `auto` is not an expression highly readable.
 Please explicitly specify the variable type, if it doesn't become clear immediately from the context:
-```c++
+
+```cpp
 for (const int & item : container)
   std::cout << item;
 ```

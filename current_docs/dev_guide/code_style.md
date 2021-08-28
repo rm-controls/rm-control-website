@@ -42,9 +42,9 @@
 [[deprecated("use bar instead")]] void foo() {}
 ```
 
-   这将导致：
+这将导致：
 
-         warning: 'foo' is deprecated: use bar instead [-Wdeprecated-declarations] foo(); ^ note: 'foo' has been explicitly marked deprecated here void foo() {} ^
+      warning: 'foo' is deprecated: use bar instead [-Wdeprecated-declarations] foo(); ^ note: 'foo' has been explicitly marked deprecated here void foo() {} ^
 
  - 添加相关的 TODO，描述何时删除该功能（日期和/或 ROS 版本）
 
@@ -147,12 +147,14 @@ catkin build
 ### clang-tidy的例外
 
 可以通过使用 **NOLINT** 或 **NOLINTNEXTLINE** 注释来抑制不需要的 clang-tidy 检查。 请在注释后的括号中明确指定check的名称：
+
 ```cpp
 const IKCallbackFn solution_callback = 0; // NOLINT(modernize-use-nullptr)
 
 // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
 robot_state::RobotState robot_state(default_state);
 ```
+
 请注意，`modernize-loop-convert` 检查可能会将 `for (...; ...; ...)` 循环转换为 `for (auto & ... : ...)`。
 然而，`auto` 有时候不是一个高度可读的表达式。
 如果它不能立即从上下文中变得清晰，请明确指定变量类型：
