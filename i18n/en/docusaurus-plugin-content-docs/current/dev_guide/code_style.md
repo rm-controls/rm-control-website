@@ -99,7 +99,7 @@ Use this sparingly though.
 
 > [!Tip]
 >
-> The command Line tools are troublesome? Try [CLion IDE Configuration]().
+> The command Line tools are troublesome? Try [CLion IDE Configuration].
 
 
 ## clang-tidy Linting
