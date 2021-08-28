@@ -50,9 +50,11 @@ sudo apt update
 sudo apt install ros-noetic-rm-chassis-controllers
 ```
 
-> [!Note]
->
-> 由于在 GitHub上 开源，我们已经将大部分仓库转移至 GitHub 托管并使用 GitHub Actions 运行 CI。
+:::info
+
+由于在 GitHub上 开源，我们已经将大部分仓库转移至 GitHub 托管并使用 GitHub Actions 运行 CI。
+
+:::
 
 ## 良好的兼容性
 硬件接口使用了 Linux 的 [SocketCAN](https://www.kernel.org/doc/Documentation/networking/can.txt) 和 sysfs，意味着可以在 Jetson AGX 和妙算等带有CAN总线的 ARM 设备上运行，同时我们还制作了usb转CAN设备: [rm_usb2can](https://github.com/rm-controls/rm_usb2can)，从而支持在任意 x86 平台上面运行，如：Intel NUC和队员的笔记本电脑，在RMUC中我们以Intel NUC为主，也被官方在2021年高中生暑期营中部署在妙算2上使用。下图展示了兼容的部分计算设备。
