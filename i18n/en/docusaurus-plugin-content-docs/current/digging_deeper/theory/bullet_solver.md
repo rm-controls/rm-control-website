@@ -162,7 +162,7 @@ rt_target_y += this->target_dy_ * this->dt_;
 
    The target point velocity on the y-axis component
 
-Please refer to the [bullet_solver.cpp]() for the specific implementation of all algorithms.
+Please refer to the [bullet_solver.cpp] for the specific implementation of all algorithms.
 
 # Test program
 ## Include header file

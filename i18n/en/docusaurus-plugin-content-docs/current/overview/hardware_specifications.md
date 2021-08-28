@@ -2,7 +2,7 @@
 The whole platform is modular-designed with quick disassembly and each part can be separately programmed and tested.
 
 <center class="half">
-<img src="https://rm-static.djicdn.com/documents/20758/2f128eaf0f69e154755275553932690.png" width = 45% height = 45% /><img src="https://rm-static.djicdn.com/documents/20758/4c77c3e5940551547552816751545099.png" width = 30% height = 30% />
+<img src="https://rm-static.djicdn.com/documents/20758/2f128eaf0f69e154755275553932690.png" width = "45%" height = "45%" /><img src="https://rm-static.djicdn.com/documents/20758/4c77c3e5940551547552816751545099.png" width = "30%" height = "30%" />
 </center>
 
 The platform is mainly composed of three parts.
@@ -10,7 +10,7 @@ The platform is mainly composed of three parts.
 1. chassis module
 
 <center>
-<img src="https://rm-static.djicdn.com/documents/20758/6852f47fed9111547552846201962908.png" width = 50% height = 50% />
+<img src="https://rm-static.djicdn.com/documents/20758/6852f47fed9111547552846201962908.png" width = "50%" height = "50%" />
 </center>
 
 - Use Mecanum wheels for omnidirectional movement
@@ -23,7 +23,7 @@ The platform is mainly composed of three parts.
 2. Gimbal module
 
 <center>
-<img src="https://rm-static.djicdn.com/documents/20758/f57a9c3c2a0cf1547552884336678019.jpeg" width = 40% height = 40% />
+<img src="https://rm-static.djicdn.com/documents/20758/f57a9c3c2a0cf1547552884336678019.jpeg" width = "40%" height = "40%" />
 </center>
 
 
@@ -38,7 +38,7 @@ The platform is mainly composed of three parts.
 3. Referee system module
 
 <center>
-<img src="https://rm-static.djicdn.com/documents/20758/70d4ea1ef88141547552911169893675.png" width = 40% height = 40% />
+<img src="https://rm-static.djicdn.com/documents/20758/70d4ea1ef88141547552911169893675.png" width = "40%" height = "40%" />
 </center>
 
 
