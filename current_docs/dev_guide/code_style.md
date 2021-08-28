@@ -116,7 +116,7 @@ clang-format 需要在 catkin 工作区的根目录下有一个配置文件，rm
 
 与 clang-format 类似，clang-tidy 使用在向上遍历源文件夹层次结构时首先找到的配置文件 `.clang-tidy`。 所有 rm-controls 存储库都在存储库根文件中提供相同的文件。
 
-与 clang-format 不同，clang-tidy 需要知道用于构建项目的确切编译器选项。 要提供它们，请使用 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON 配置 cmake，cmake 将在包的构建文件夹中创建一个名为 compile_commands.json 的文件。 构建完成后，您可以运行 clang-tidy 来分析您的代码，甚至可以自动修复问题，如下所示：
+与 clang-format 不同，clang-tidy 需要知道用于构建项目的确切编译器选项。 要提供它们，请使用 `-DCMAKE_EXPORT_COMPILE_COMMANDS=ON` 配置 cmake，cmake 将在包的构建文件夹中创建一个名为 `compile_commands.json` 的文件。 构建完成后，您可以运行 clang-tidy 来分析您的代码，甚至可以自动修复问题，如下所示：
 
 ```sh
 for file in $(find $CATKIN_WS/build -name compile_commands.json) ; do
