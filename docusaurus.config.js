@@ -38,8 +38,8 @@ module.exports = {
         {
           type: 'doc',
           docId: 'overview/intro',
-          position: 'left',
-          label: 'Tutorial',
+          position: 'right',
+          label: 'Docs',
         },
         {
           href: 'https://github.com/rm-controls/',
