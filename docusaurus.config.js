@@ -29,7 +29,7 @@ module.exports = {
   },
   themeConfig: {
     navbar: {
-      title: 'rm-controls Tutorial',
+      title: 'rm-controls',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.png',
@@ -66,13 +66,13 @@ module.exports = {
           path: 'current_docs',
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/rm-controls/rm-controls-tutorial',
+          editUrl: 'https://github.com/rm-controls/rm-controls-docs',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://github.com/rm-controls/rm-controls-tutorial',
+            'https://github.com/rm-controls/rm-controls-docs',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
