@@ -6,7 +6,7 @@ module.exports = {
   title: 'rm-controls documentation',
   tagline: '',
   url: 'https://rm-controls.github.io',
-  baseUrl: '/rm-controls-docs/',
+  baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
