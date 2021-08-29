@@ -95,11 +95,17 @@ $intro: (
       position: absolute,
       left: 50%,
       top: 50%,
-      max-width: 75%,
+      //max-width: 75%,
+      width: 200%,
+      height: auto,
       transform: translate(-50%, -50%),
     ),
     tablet: (
       max-width: 75%,
+    ),
+    desktop: (
+      width: 200%,
+      height: auto,
     )
   ),
 );

@@ -43,6 +43,11 @@ module.exports = {
       },
       items: [
         {
+          href: '/get-started',
+          position: 'right',
+          label: 'Get Started',
+        },
+        {
           type: 'doc',
           docId: 'overview/intro',
           position: 'right',

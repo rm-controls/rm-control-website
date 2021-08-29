@@ -18,9 +18,9 @@ export default function GetStarted() {
     },
     {
       bg: useBaseUrl('img/ic-plugin-bg.svg'),
-      icon: useBaseUrl('img/ic-plugin.svg'),
+      icon: useBaseUrl('http://gazebosim.org/assets/logos/gazebo_vert_pos-faad8cc37ab336f850e549077ef5831e5098034532113b06328dfd70355fb8f7.svg'),
       type: 'plugin',
-      label: `I want a new WordPress <span class="${component}__label-highlight">plugin</span>`,
+      label: `在 <span class="${component}__label-highlight">Gazebo</span> 中尝试麦克纳姆轮以及舵轮 `,
       link: useBaseUrl('/docs/plugin'),
     },
   ];
