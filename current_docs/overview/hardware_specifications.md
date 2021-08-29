@@ -17,4 +17,10 @@ Jetson AGX Xavier/NX/TX2 和 妙算2-G（TX2）都具有两个 build-in 的 CAN 
 
 ## 其他接口
 GPIO、PWM、I2C 接口正在开发中，详见 [road map](TODO)。
-##
+
+## 模块拓扑
+
+下图展示的是整车基本硬件拓扑框图（工程机器人整车拓扑的差异较大，在此不给出）。
+
+![hardware_typology_schematic](/img/hardware_specifications/hardware_typology_schematic.png) 
+
