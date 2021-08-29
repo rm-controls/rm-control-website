@@ -24,3 +24,4 @@ GPIO、PWM、I2C 接口正在开发中，详见 [road map](TODO)。
 
 ![hardware_typology_schematic](/img/hardware_specifications/hardware_typology_schematic.png) 
 
+机器人基本硬件拓扑结构是以云台和底盘两大部分组成的，这两个部分以导电滑环为分割线隔开。车上的12V、19V、5V、3.3V电压组分别由LM25116、LM3150、SY8303、RT9193提供。
