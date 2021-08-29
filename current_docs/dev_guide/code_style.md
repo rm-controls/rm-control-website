@@ -1,5 +1,5 @@
 ---
-label: 'code_style'
+id: code_style
 sidebar_position: 1
 ---
 

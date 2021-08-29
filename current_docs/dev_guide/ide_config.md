@@ -1,5 +1,5 @@
 ---
-label: 'clion_ide_config'
+id: clion_ide_config
 sidebar_position: 2
 ---
 
