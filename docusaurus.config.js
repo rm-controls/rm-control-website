@@ -13,7 +13,7 @@ module.exports = {
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'rm-controls',
-  projectName: 'rm-controls-docs',
+  projectName: 'rm-controls.github.io',
   trailingSlash: false,
   i18n: {
     defaultLocale: 'zh-cn',
@@ -78,11 +78,11 @@ module.exports = {
           path: 'current_docs',
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/rm-controls/rm-controls-docs/tree/master',
+          editUrl: 'https://github.com/rm-controls/rm-controls.github.io/tree/master',
         },
         blog: {
           showReadingTime: true,
-          editUrl: 'https://github.com/rm-controls/rm-controls-docs/tree/master',
+          editUrl: 'https://github.com/rm-controls/rm-controls.github.io/tree/master',
         },
         theme: {
           customCss: require.resolve('./src/scss/application.scss'),
