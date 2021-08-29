@@ -40,6 +40,7 @@ jobs:
         env:
           USE_SSH: true
           GIT_USER: git
+          DEPLOYMENT_BRANCH: gh-pages
         run: |
           git config --global user.email "muzhou233@outlook.com"
           git config --global user.name "MuZhou233"
