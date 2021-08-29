@@ -76,6 +76,8 @@ module.exports = {
       {
         docs: {
           path: 'current_docs',
+          remarkPlugins: [math],
+          rehypePlugins: [katex],
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/rm-controls/rm-controls.github.io/tree/master',
@@ -87,8 +89,6 @@ module.exports = {
         theme: {
           customCss: require.resolve('./src/scss/application.scss'),
         },
-        remarkPlugins: [math],
-        rehypePlugins: [katex],
       },
     ],
   ],
