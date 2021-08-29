@@ -1,0 +1,21 @@
+$core-map: (
+  font-family: $base-font-family,
+  font-size: $base-font-size,
+);
+
+*,
+*::after,
+*::before {
+  @include box-sizing;
+}
+
+html {
+  font-size: map-get-strict($core-map, font-size);
+}
+
+body {
+  @include font-smoothing;
+  font-family: map-get-strict($core-map, font-family);
+  position: relative;
+  overflow-x: hidden;
+}

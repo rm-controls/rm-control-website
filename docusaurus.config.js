@@ -1,17 +1,19 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const math = require('remark-math');
+const katex = require('rehype-katex');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'rm-controls documentation',
   tagline: '',
   url: 'https://rm-controls.github.io',
-  baseUrl: '/rm-controls-docs/',
+  baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'rm-controls',
-  projectName: 'rm-controls-docs',
+  projectName: 'rm-controls.github.io',
   trailingSlash: false,
   i18n: {
     defaultLocale: 'zh-cn',
@@ -74,21 +76,31 @@ module.exports = {
       {
         docs: {
           path: 'current_docs',
+          remarkPlugins: [math],
+          rehypePlugins: [katex],
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/rm-controls/rm-controls-docs/tree/master',
+          editUrl: 'https://github.com/rm-controls/rm-controls.github.io/tree/master',
         },
         blog: {
           showReadingTime: true,
-          editUrl: 'https://github.com/rm-controls/rm-controls-docs/tree/master',
+          editUrl: 'https://github.com/rm-controls/rm-controls.github.io/tree/master',
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve('./src/scss/application.scss'),
         },
       },
     ],
   ],
+  stylesheets: [
+    {
+        href: "https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css",
+        integrity: "sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc",
+        crossorigin: "anonymous",
+    },
+  ],
   plugins: [
+    'docusaurus-plugin-sass',
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),
       {
