@@ -1,3 +1,8 @@
+---
+label: 'clion_ide_config'
+position: 2
+---
+
 # CLion IDE 配置
 我们推荐使用 CLion IDE 作为电控和视觉的开发IDE，安装方式见官方教程 [安装CLion](https://www.jetbrains.com/help/clion/installation-guide.html)。
 

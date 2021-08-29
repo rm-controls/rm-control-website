@@ -1,3 +1,6 @@
+label: '代码规范'
+position: 1
+
 # 代码规范
 
 我们使用在C++开发中使用 [ROS C++ Style guide](http://wiki.ros.org/CppStyleGuide) ，在Python开发中（很少）使用 [ROS Python Style guide](http://wiki.ros.org/PyStyleGuide) , 你还可以将 [ros_best_pracitces](https://github.com/leggedrobotics/ros_best_practices) 作为模版参考.
