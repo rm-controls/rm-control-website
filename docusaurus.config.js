@@ -76,12 +76,11 @@ module.exports = {
           path: 'current_docs',
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/rm-controls/rm-controls-docs',
+          editUrl: 'https://github.com/rm-controls/rm-controls-docs/tree/master',
         },
         blog: {
           showReadingTime: true,
-          editUrl:
-            'https://github.com/rm-controls/rm-controls-docs',
+          editUrl: 'https://github.com/rm-controls/rm-controls-docs/tree/master',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
