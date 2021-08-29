@@ -11,16 +11,16 @@ export default function GetStarted() {
   const itemsData = [
     {
       bg: useBaseUrl('img/ic-theme-bg.svg'),
-      icon: useBaseUrl('img/ic-theme.svg'),
+      icon: useBaseUrl('img/homepage/3508.png'),
       type: 'theme',
-      label: `I want a new WordPress <span class="${component}__label-highlight">theme</span>`,
+      label: `在仿真与实物中使用 <span class="${component}__label-highlight">3508</span>`,
       link: useBaseUrl('/docs/theme'),
     },
     {
       bg: useBaseUrl('img/ic-plugin-bg.svg'),
       icon: useBaseUrl('http://gazebosim.org/assets/logos/gazebo_vert_pos-faad8cc37ab336f850e549077ef5831e5098034532113b06328dfd70355fb8f7.svg'),
       type: 'plugin',
-      label: `在 <span class="${component}__label-highlight">Gazebo</span> 中尝试麦克纳姆轮以及舵轮 `,
+      label: `在 <span class="${component}__label-highlight">Gazebo</span> 中操作麦克纳姆轮以及舵轮底盘 `,
       link: useBaseUrl('/docs/plugin'),
     },
   ];
@@ -56,7 +56,7 @@ export default function GetStarted() {
       >
         <Heading
           componentClass={component}
-          title={'Choose one of the options to get started'}
+          title={'选择一种入门的方式'}
           subtitle={'We\'ve built a bot to automate the tedious process of setting up a new project, so you can focus on your code. Just choose where you want to start.'}
         />
         <div className={`${component}__content`}>
