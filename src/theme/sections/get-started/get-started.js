@@ -14,14 +14,14 @@ export default function GetStarted() {
       icon: useBaseUrl('img/homepage/3508.png'),
       type: 'theme',
       label: `在仿真与实物中使用 <span class="${component}__label-highlight">3508</span>`,
-      link: useBaseUrl('/docs/theme'),
+      link: useBaseUrl('quick_start/rm-controls_101'),
     },
     {
       bg: useBaseUrl('img/ic-plugin-bg.svg'),
       icon: useBaseUrl('http://gazebosim.org/assets/logos/gazebo_vert_pos-faad8cc37ab336f850e549077ef5831e5098034532113b06328dfd70355fb8f7.svg'),
       type: 'plugin',
-      label: `在 <span class="${component}__label-highlight">Gazebo</span> 中操作麦克纳姆轮以及舵轮底盘 `,
-      link: useBaseUrl('/docs/plugin'),
+      label: `在 <span class="${component}__label-highlight">Gazebo</span> 中操控麦克纳姆轮以及舵轮底盘 `,
+      link: useBaseUrl('quick_start/rm-controls_101'),
     },
   ];
 
@@ -41,7 +41,7 @@ export default function GetStarted() {
             <img className={`${component}__icon-bg`} src={bg} />
             <img className={`${component}__icon-img`} src={icon} />
           </div>
-          <div className={`${component}__label`} dangerouslySetInnerHTML={{__html: label}}></div>
+          <div className={`${component}__label`} dangerouslySetInnerHTML={{__html: label}}/>
           <Arrow componentClass={component} />
         </a>
       </div>
@@ -57,7 +57,7 @@ export default function GetStarted() {
         <Heading
           componentClass={component}
           title={'选择一种入门的方式'}
-          subtitle={'We\'ve built a bot to automate the tedious process of setting up a new project, so you can focus on your code. Just choose where you want to start.'}
+          subtitle={'你可以通过手上常用的 RM3508 电机学习如何在仿真和现实中使用 rm-controls；如果你觉得单个电机过于简单，可以尝试在仿真中操控麦克纳姆轮和舵轮底盘'}
         />
         <div className={`${component}__content`}>
           {items}
