@@ -1,6 +1,6 @@
 ---
 label: 'code_style'
-position: 1
+sidebar_position: 1
 ---
 
 # 代码规范

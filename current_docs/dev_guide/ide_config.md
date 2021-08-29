@@ -1,6 +1,6 @@
 ---
 label: 'clion_ide_config'
-position: 2
+sidebar_position: 2
 ---
 
 # CLion IDE 配置

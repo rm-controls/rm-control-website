@@ -1,3 +1,8 @@
+---
+id: hardware_specifications
+sidebar_position: 2
+---
+
 # 硬件规格
 ## CAN 总线
 ### 內置 CAN 

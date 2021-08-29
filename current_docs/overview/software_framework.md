@@ -1,3 +1,8 @@
+---
+id: software_framework
+sidebar_position: 1
+---
+
 # 软件框架
 ## rm-controls 
 :::tip
