@@ -32,6 +32,13 @@ $markdown: (
       line-height: 1.7,
     ),
   ),
+  img: (
+    mobile: (
+      display: block,
+      width: 85%,
+      margin: 0 auto,
+    )
+  ),
   blockquote: (
     mobile: (
       background-color: $base-egg-color,
@@ -68,6 +75,10 @@ $markdown: (
 
   li {
     @include responsive($markdown, li);
+  }
+
+  img {
+    @include responsive($markdown, img);
   }
 
   blockquote {
