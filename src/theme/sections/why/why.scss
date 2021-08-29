@@ -4,58 +4,54 @@ $why: (
       padding: 0 0 55px,
     ),
     tablet: (
-      padding: 0 0 190px,
-    ),
-  ),
-  heading: (
-    mobile: (
-      max-width: 580px,
-    ),
-  ),
-  content: (
-    mobile: (
-      display: flex,
+      padding: 0 100px 100px,
     ),
   ),
   image: (
     mobile: (
-      max-width: 100%,
-      height: auto,
-    ),
-  ),
-  image-desktop: (
-    mobile: (
-      display: none,
-    ),
-    tablet: (
       display: block,
+      margin: 0 auto,
+      width: 80%,
     ),
   ),
-  image-mobile: (
+  p: (
     mobile: (
-      display: block,
-    ),
-    tablet: (
-      display: none,
+      line-height: 1.7,
+      text-align: center,
+      color: $base-cape-color,
     ),
   ),
+  h1: (
+    mobile: (
+      font-size: 64px,
+      text-align: center,
+      color: $base-elephant-color,
+    )
+  ),
+  h2: (
+    mobile: (
+      text-align: center,
+      color: $base-elephant-color,
+    )
+  )
 );
 
 .shift-why {
   @include responsive($why, why);
 
-  &__shift-heading {
-    @include responsive($why, heading);
+  img {
+    @include responsive($why, image);
   }
 
-  &__image {
-    @include responsive($why, image);
+  p {
+    @include responsive($why, p);
+  }
 
-    &--desktop {
-      @include responsive($why, image-desktop);
-    }
-    &--mobile {
-      @include responsive($why, image-mobile);
-    }
+  h1 {
+    @include responsive($why, h1);
+  }
+
+  h2 {
+    @include responsive($why, h2);
   }
 }
