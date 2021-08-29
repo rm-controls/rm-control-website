@@ -83,6 +83,8 @@ module.exports = {
           path: 'current_docs',
           remarkPlugins: [math],
           rehypePlugins: [katex],
+          showLastUpdateAuthor: false,
+          showLastUpdateTime: true,
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/rm-controls/rm-controls.github.io/tree/master',
