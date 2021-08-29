@@ -31,7 +31,7 @@ module.exports = {
     announcementBar: {
       id: 'star',
       content:
-          '⭐️ If you like rm-controls, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/rm-controls/rm_control">rm_control</a> and <a target="_blank" rel="noopener noreferrer" href="https://github.com/rm-controls/rm_control">rm_controllers</a> ! ⭐️',
+          '⭐️ If you like rm-controls, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/rm-controls/rm_control">rm_control</a> and <a target="_blank" rel="noopener noreferrer" href="https://github.com/rm-controls/rm_controllers">rm_controllers</a> ! ⭐️',
     },
     navbar: {
       title: 'rm-controls',
@@ -76,12 +76,11 @@ module.exports = {
           path: 'current_docs',
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/rm-controls/rm-controls-docs',
+          editUrl: 'https://github.com/rm-controls/rm-controls-docs/tree/master',
         },
         blog: {
           showReadingTime: true,
-          editUrl:
-            'https://github.com/rm-controls/rm-controls-docs',
+          editUrl: 'https://github.com/rm-controls/rm-controls-docs/tree/master',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

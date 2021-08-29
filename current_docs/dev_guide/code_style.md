@@ -1,5 +1,7 @@
-label: '代码规范'
+---
+label: 'code_style'
 position: 1
+---
 
 # 代码规范
 
