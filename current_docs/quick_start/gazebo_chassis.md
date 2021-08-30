@@ -18,7 +18,7 @@ import TabItem from '@theme/TabItem';
 
 ```shell
 cd ~/ws_ws/src
-git clone https://github.com/rm-controls/rm_control/rm_gazebo.git
+git clone https://github.com/rm-controls/rm_control.git
 rosdep install --from-paths . --ignore-src
 catkin build
 ```
@@ -27,7 +27,7 @@ catkin build
 必须确保你的 `rosdep` 安装和初始化是正确的。
 :::
 
-首先要配置好环境变量为目标机器人,hero及其他车是麦克纳姆轮底盘，而standard4是舵轮底盘。
+配置好环境变量为目标机器人,hero及其他车是麦克纳姆轮底盘，而standard4是舵轮底盘。
 <Tabs
 groupId="operating-systems"
 defaultValue="麦克纳姆轮"
@@ -52,7 +52,7 @@ values={[
 
 ## 运行控制器并操控底盘
 
-### 利用命令行去设置好环境变量
+### 利用命令行去设置环境变量
 
 <Tabs
 groupId="operating-systems"
@@ -66,13 +66,13 @@ values={[
 <TabItem value="舵轮">export ROBOT_TYPE=standard4</TabItem>
 </Tabs>
 
-### 利用命令行去控制底盘
+### 利用命令行控制底盘
 
 进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中拉取本次教程所要用到的仿真包 `rm_chassis_controllers`，并使用 `rosdep` 安装包的依赖。
 
 ```shell
 cd ~/ws_ws/src
-git clone https://github.com/rm-controls/rm_controllers/rm_chassis_controllers.git
+git clone https://github.com/rm-controls/rm_controllers.git
 rosdep install --from-paths . --ignore-src
 catkin build
 ```
@@ -108,7 +108,7 @@ angular:
   z: 0.0" 
 ```
 
-### 利用工具Message Publisher去控制底盘
+### 利用工具Message Publisher控制底盘
 
 在rqt工具v中找到Message Publisher并打开
 
