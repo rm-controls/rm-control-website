@@ -257,7 +257,7 @@ joint1_motor:
     mon launch rm_controls_tutorials load_rm_hw.launch
 
 
-## 添加控制器并运行
+## 运行控制器
 用你最喜欢的编辑器创建控制器的配置文件 `config/controllers.yaml` 如下：
 
 ```yaml
@@ -293,13 +293,35 @@ controllers:
 </launch>
 ```
 当 Gazebo 或 rm_hw 运行时，通过以下指令加载控制器
-mon launch rm_controls_tutorials load_controllers.launch
+
+    mon launch rm_controls_tutorials load_controllers.launch
+
+### 状态获取
+使用 rostopic 获取执行器（3508电机）的状态，转动 3508 的转子观察数据。
+
+    rostopic echo /actuator_states
+
+![](/img/rm-controls101/actuator_states.png) 
+
+使用下述指令开启 `joint_state_controller` ，该控制器（其实是发布器）会吧关节状态发布出去。
+```shell
+rosservice call /controller_manager/switch_controller "start_controllers: ['controllers/joint_state_controller']
+stop_controllers: ['']
+strictness: 1
+start_asap: true
+timeout: 0.0" 
+```
+使用 rostopic 获取 `joint1` 的状态，转动 3508 的输出轴观察数据。
+
+    rostopic echo /actuator_states
+
+![](/img/rm-controls101/joint_states.png)
 
 :::danger
-接下来关节/执行器将会运动如果你在尝试使用真实 3508 电机，请稳定固定好电机防止意外伤害。
+接下来关节/执行器将会运动，如果你在尝试使用真实 3508 电机，请稳定固定好电机防止意外伤害。
 :::
 
-#### 位置控制器
+### 位置控制器
 停止运行速度控制器，运行位置控制器的指令如下：
 
 ```shell
@@ -318,7 +340,7 @@ timeout: 0.0"
 在 ROS 中，所有数据的单位都是国际标准单位，如：角度为 rad，角速度为 rad/s。
 :::
 
-#### 速度控制器
+### 速度控制器
 停止运行位置控制器，运行速度控制器的指令如下：
 
 ```shell
