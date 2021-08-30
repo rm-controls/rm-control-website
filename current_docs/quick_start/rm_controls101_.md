@@ -62,10 +62,10 @@ mkdir urdf launch
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="rmrobot">
     <!-- Constants for robot dimensions -->
-    <xacro:property name="mass" value="1"/> <!-- arbitrary value for mass -->
+    <xacro:property name="mass" value="0.5"/> <!-- arbitrary value for mass -->
     <xacro:property name="width" value="0.1"/> <!-- Square dimensions (widthxwidth) of beams -->
-    <xacro:property name="height1" value="2"/> <!-- Link 1 -->
-    <xacro:property name="height2" value="1"/> <!-- Link 2 -->
+    <xacro:property name="height1" value="1"/> <!-- Link 1 -->
+    <xacro:property name="height2" value="0.5"/> <!-- Link 2 -->
     <xacro:property name="axel_offset" value="0.05"/> <!-- Space btw top of beam and the each joint -->
     <!-- Used for fixing robot to Gazebo 'base_link' -->
     <link name="world"/>
@@ -73,6 +73,7 @@ mkdir urdf launch
         <parent link="world"/>
         <child link="link1"/>
     </joint>
+
     <link name="link1">
         <collision>
             <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
@@ -85,6 +86,7 @@ mkdir urdf launch
             <geometry>
                 <box size="${width} ${width} ${height1}"/>
             </geometry>
+            <material name="orange"/>
         </visual>
         <inertial>
             <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
@@ -97,13 +99,14 @@ mkdir urdf launch
     </link>
     <joint name="joint1" type="revolute">
         <axis xyz="0 1 0"/>
-        <origin xyz="0 ${width} ${height1 - axel_offset}" rpy="0 0 0"/>
+        <origin xyz="0 ${width} ${height1 - axel_offset}" rpy="0 1.57 0"/>
         <!--      limit not work while type="continuous"-->
         <limit effort="5." velocity="50." lower="-1e9" upper="1e9"/>
         <dynamics damping="0.01" friction="0.02"/>
         <parent link="link1"/>
         <child link="link2"/>
     </joint>
+
     <link name="link2">
         <collision>
             <origin xyz="0 0 ${height2/2 - axel_offset}" rpy="0 0 0"/>
@@ -116,6 +119,7 @@ mkdir urdf launch
             <geometry>
                 <box size="${width} ${width} ${height2}"/>
             </geometry>
+            <material name="black"/>
         </visual>
         <inertial>
             <origin xyz="0 0 ${height2/2 - axel_offset}" rpy="0 0 0"/>
@@ -126,7 +130,7 @@ mkdir urdf launch
                     izz="${mass / 12.0 * (width*width + width*width)}"/>
         </inertial>
     </link>
-    
+
     <transmission name="tran1">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="joint1">
@@ -139,7 +143,7 @@ mkdir urdf launch
     </transmission>
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotNamespace>/rmrobot</robotNamespace>
+            <robotNamespace>/</robotNamespace>
         </plugin>
     </gazebo>
 </robot>
