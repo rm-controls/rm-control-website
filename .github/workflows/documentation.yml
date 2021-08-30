@@ -43,8 +43,12 @@ jobs:
           DEPLOYMENT_BRANCH: gh-pages
         run: |
           sudo apt install curl > /dev/null
-          mkdir -p current_docs/digging_deeper/controllers
-          curl https://raw.githubusercontent.com/rm-controls/rm_controllers/master/rm_calibration_controllers/README.md > current_docs/digging_deeper/controllers/rm_calibration_controllers.md
+          mkdir -p current_docs/digging_deeper/Controllers
+          curl https://raw.githubusercontent.com/rm-controls/rm_controllers/master/rm_calibration_controllers/README.md > current_docs/digging_deeper/Controllers/rm_calibration_controllers.md
+          curl https://raw.githubusercontent.com/rm-controls/rm_controllers/master/rm_chassis_controllers/README.md > current_docs/digging_deeper/Controllers/rm_chassis_controllers.md
+          curl https://raw.githubusercontent.com/rm-controls/rm_controllers/master/rm_gimbal_controllers/README.md > current_docs/digging_deeper/Controllers/rm_gimbal_controllers.md
+          curl https://raw.githubusercontent.com/rm-controls/rm_controllers/master/rm_shooter_controllers/README.md > current_docs/digging_deeper/Controllers/rm_shooter_controllers.md
+          curl https://raw.githubusercontent.com/rm-controls/rm_controllers/master/robot_state_controller/README.md > current_docs/digging_deeper/Controllers/robot_state_controller.md
           git config --global user.email "muzhou233@outlook.com"
           git config --global user.name "MuZhou233"
           if [ -e yarn.lock ]; then
