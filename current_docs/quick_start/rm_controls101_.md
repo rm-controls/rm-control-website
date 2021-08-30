@@ -150,7 +150,7 @@ mkdir urdf launch
 ```
 上述代码创建了一个二连杆，并将 `link1` 固定不动，用 `joint1` 连接 `link2`，每个link都有它的碰撞、外观、惯量的属性。
 
-用你最喜欢的编辑器 创建launch文件 `urdf/load_gazebo.launch` 如下：
+用你最喜欢的编辑器 创建launch文件 `launch/load_gazebo.launch` 如下：
 
 ```xml
 <launch>
@@ -208,6 +208,7 @@ controllers:
 </launch>
 ```
 当仿真运行时，通过以下指令加载控制器
+    
     mon launch rm_controls_tutorials load_controllers.launch
 
 #### 位置控制器
