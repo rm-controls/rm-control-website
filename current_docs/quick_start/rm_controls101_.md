@@ -188,7 +188,7 @@ controllers:
 
 其中 `joint_state_controller` 是关节状态发布器，其余两个控制器分别为用 PID 进行关节位置和速度的控制。
 
-用你最喜欢的编辑器 创建launch文件 `urdf/load_controllers.launch` 如下：
+用你最喜欢的编辑器 创建launch文件 `launch/load_controllers.launch` 如下：
 
 ```xml
 <launch>
