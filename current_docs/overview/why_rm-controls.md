@@ -40,9 +40,11 @@ lower_gimbal_controller:
 ![舵轮机器人仿真](/img/rm-controls/gazebo.jpg)
 
 ## 持续集成
-![CI监视器](/img/rm-controls/ci_monitor.png)
-我们在自建 gitlab 服务器上使用了 [industrial_ci](https://github.com/ros-industrial/industrial_ci) 对代码进行持续集成，自动对代码进行编译、测试并发布到 apt 源上，当在某台机器人上开发稳定之后，其他机器人可以使用安装或升级的方式获得最新功能的软件。如：使用两行指令完成底盘控制器的安装或更新。
+我们在自建 gitlab 服务器上使用了 [industrial_ci](https://github.com/ros-industrial/industrial_ci) 对代码进行持续集成，自动对代码进行编译、测试并发布到 apt 源上。
 
+![CI监视器](/img/rm-controls/ci_monitor.png)
+
+当在某台机器人上开发稳定之后，其他机器人可以使用安装或升级的方式获得最新功能的软件。如：使用两行指令完成底盘控制器的安装或更新。
 ```sh
 sudo apt update
 sudo apt install ros-noetic-rm-chassis-controllers

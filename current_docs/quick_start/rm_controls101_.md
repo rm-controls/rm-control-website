@@ -22,7 +22,7 @@ sidebar_position: 1
 强烈建议使用 [catkin tools](https://catkin-tools.readthedocs.io/en/latest/) 代替 [catkin_make](http://wiki.ros.org/catkin/commands/catkin_make) 使用 [mon](http://wiki.ros.org/rosmon) 代替 [roslaunch](http://wiki.ros.org/roslaunch) ，后面的教程均使用 catkin_tools 和 rosmon 的指令。
 :::
 
-## 在仿真中运行
+## 运行仿真
 如果只进行简单的单个 3508 驱动的关节仿真，并不需要 rm-controls 的相关代码，可以说本节其实是 ros-control + gazebo 的入门。
 
 :::caution
@@ -145,7 +145,7 @@ mkdir urdf launch
 ```
 上述代码创建了一个二连杆，并将 `link1` 固定不动，用 `joint1` 连接 `link2`，每个link都有它的碰撞、外观、惯量的属性。
 
-用你最喜欢的编辑器 创建launch文件 `urdf/load_gazebo.launch` 如下：
+用你最喜欢的编辑器 创建launch文件 `launch/load_gazebo.launch` 如下：
 
 ```xml
 <launch>
@@ -169,7 +169,7 @@ mkdir urdf launch
 
 现在你可以尝试控制仿真中的 joint1 : [添加控制器并运行](#添加控制器并运行)
 
-## 在实物中运行
+## 运行实物
 
 ### 准备 CAN 设备
 安装在 Linux 上 SocketCAN 命令行调试工具：
@@ -188,7 +188,7 @@ mkdir urdf launch
 ![candump](/img/rm-controls101/candump.png)
 
 ### 配置并运行 rm_hw
-首先需要先安装 rm_hw 及其依赖，你可以选择从包安装或者从源码编译
+首先需要先安装 rm_hw 及其依赖，你可以选择从包安装或者从源码编译：
 #### 从包安装
 
     sudo apt install ros-noetic-rm-hw
@@ -214,11 +214,51 @@ git clone git@github.com:rm-controls/rm_control.git #SSH
 你不应该把仓库直接克隆到机器人计算设备，也不应该将整个 rm-controls 元包传到机器人上。因为 rm-controls 包含了仿真，需要安装许多机器人不需要的仿真和图形依赖。
 :::
 
-使用 `rosdep` 安装依赖
-    rosdep 
+使用 `rosdep` 安装依赖，并编译：
+
+    rosdep install --from-paths . --ignore-src
+    catkin build
+:::tip
+确保你的 `rosdep` 被正确安装和初始化。
+:::
+
+用你最喜欢的编辑器创建底层配置文件 `config/rm_hw.yaml` 如下：
+
+```yaml
+bus:
+- can0
+loop_frequency: 1000
+cycle_time_error_threshold: 0.001
+
+actuators:
+joint1_motor:
+  bus: can0
+  id: 0x201
+  type: rm_3508
+  lp_cutoff_frequency: 60
+```
+
+用你最喜欢的编辑器创建 launch 文件 `launch/load_rm_hw.yaml` 如下：
+
+```xml
+<launch>
+    <!-- push robot_description to factory and spawn robot in gazebo -->
+    <param name="robot_description"
+           command="$(find xacro)/xacro $(find rm_controls_tutorials)/urdf/rmrobot.urdf.xacro"/>
+    <rosparam file="$(find rm_hw)/config/actuator_coefficient.yaml" command="load" ns="rm_hw"/>
+    <rosparam file="$(find rm_controls_tutorials)/config/rm_hw.yaml" command="load" ns="rm_hw"/>
+    <node name="rm_hw" pkg="rm_hw" type="rm_hw" respawn="false" clear_params="true"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+</launch>
+```
+
+运行 rm_hw:
+
+    mon launch rm_controls_tutorials load_rm_hw.launch
+
 
 ## 添加控制器并运行
-用你最喜欢的编辑器 创建控制器的配置文件 `config/controllers.yaml` 如下：
+用你最喜欢的编辑器创建控制器的配置文件 `config/controllers.yaml` 如下：
 
 ```yaml
 controllers:
@@ -237,7 +277,7 @@ controllers:
 
 其中 `joint_state_controller` 是关节状态发布器，其余两个控制器分别为用 PID 进行关节位置和速度的控制。
 
-用你最喜欢的编辑器 创建launch文件 `urdf/load_controller.launch` 如下：
+用你最喜欢的编辑器创建launch文件 `urdf/load_controller.launch` 如下：
 
 ```xml
 <launch>
@@ -252,8 +292,12 @@ controllers:
 "/>
 </launch>
 ```
-当仿真运行时，通过以下指令加载控制器
+当 Gazebo 或 rm_hw 运行时，通过以下指令加载控制器
 mon launch rm_controls_tutorials load_controllers.launch
+
+:::danger
+接下来关节/执行器将会运动如果你在尝试使用真实 3508 电机，请稳定固定好电机防止意外伤害。
+:::
 
 #### 位置控制器
 停止运行速度控制器，运行位置控制器的指令如下：
@@ -266,7 +310,7 @@ start_asap: true
 timeout: 0.0" 
 ```
 
-通过 rostopic 发送位置指令 `0.0`, 可以观察到 link2 快速移动到水平位置，还改变发送指令的数值观察现象。这时候可以很方便地将各个数据可视化
+此时位置闭环已经开始进行，通过 rostopic 发送位置指令 `0.0`, 可以观察到仿真中 link2 快速移动到水平位置或真实电机移动到零点 。改变发送指令的数值观察现象。这时候可以很方便地将各个数据可视化
 
     rostopic pub /controllers/joint1_position_controller/command std_msgs/Float64 "data: 0.0"
 
@@ -285,6 +329,6 @@ start_asap: true
 timeout: 0.0" 
 ```
 
-通过 rostopic 发送位置指令 `3.1415`, 可以观察到仿真中的 link2 或真实以半圈每秒的速度旋转。
+通过 rostopic 发送位置指令 `3.1415`, 可以观察到仿真中的 link2 或真实电机以半圈每秒的速度旋转。
 
     rostopic pub /controllers/joint1_velocity_controller/command std_msgs/Float64 "data: 3.1415"
