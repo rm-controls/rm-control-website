@@ -47,7 +47,7 @@ catkin build
 
 ```shell
 cd rm_controls_tutorials
-mkdir urdf launch
+mkdir urdf launch config
 ```
 
 ### 创建 URDF 并运行仿真
@@ -238,7 +238,7 @@ joint1_motor:
   lp_cutoff_frequency: 60
 ```
 
-用你最喜欢的编辑器创建 launch 文件 `launch/load_rm_hw.yaml` 如下：
+用你最喜欢的编辑器创建 launch 文件 `launch/load_rm_hw.launch` 如下：
 
 ```xml
 <launch>
@@ -277,7 +277,7 @@ controllers:
 
 其中 `joint_state_controller` 是关节状态发布器，其余两个控制器分别为用 PID 进行关节位置和速度的控制。
 
-用你最喜欢的编辑器创建launch文件 `urdf/load_controller.launch` 如下：
+用你最喜欢的编辑器创建launch文件 `launch/load_controllers.launch` 如下：
 
 ```xml
 <launch>
