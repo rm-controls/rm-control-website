@@ -37,7 +37,7 @@ sidebar_position: 1
 ### 创建包并安装依赖
 进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中创建存放本次教程需要用的包 `rm_controls_tutorials`，并使用 `rosdep` 安装包的依赖。
 
-```bash
+```shell
 cd ~/ws_ws/src
 catkin create pkg rm_controls_tutorials --catkin-deps xacro gazebo_ros_control
 rosdep install --from-paths . --ignore-src
@@ -48,13 +48,14 @@ catkin build
 必须确保你的 `rosdep` 安装和初始化是正确的。
 :::
 
-### 创建 URDF 并运行仿真
-创建 urdf 和 launch 文件夹
+创建 urdf、 launch、config 文件夹
 
-```bash
+```shell
 cd rm_controls_tutorials
 mkdir urdf launch
 ```
+
+### 创建 URDF 并运行仿真
 
 用你最喜欢的文本编辑器创建文件 `urdf/rmrobot.urdf.xacro` 如下：
 ```xml
@@ -145,7 +146,7 @@ mkdir urdf launch
 ```
 上述代码创建了一个二连杆，并将 `link1` 固定不动，用 `joint1` 连接 `link2`，每个link都有它的碰撞、外观、惯量的属性。
 
-用你最喜欢的 launch 创建文件 `urdf/load_gazebo.launch` 如下：
+用你最喜欢的编辑器 创建launch文件 `urdf/load_gazebo.launch` 如下：
 
 ```xml
 <launch>
@@ -163,9 +164,81 @@ mkdir urdf launch
     
     mon launch rm_controls_tutorials load_gazebo.launch
 
-就可以开始仿真，可以看到两个连杆，这时候给一定的力作用在 link2 上，link2 将会往下摆动。
+就可以开始仿真，可以看到两个连杆，这时候给一定的力作用在 link2 上，link2 将会摆动并慢慢停下。
 
-![](/img/rm-controls101/gazebo_two_link.png)
+![](/img/rm-controls101/gazebo_two_link.gif)
+
+### 添加控制器并运行
+用你最喜欢的编辑器 创建控制器的配置文件 `config/controllers.yaml` 如下：
+
+```yaml
+controllers:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+  joint1_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: joint1
+    pid: { p: 50, i: 0.0, d: 2.5, i_clamp_max: 1, i_clamp_min: -1, antiwindup: true }
+  joint1_velocity_controller:
+    type: effort_controllers/JointVelocityController
+    joint: joint1
+    pid: { p: 0.8, i: 0, d: 0.0, i_max: 0.0, i_min: 0.0, antiwindup: true }
+```
+
+其中 `joint_state_controller` 是关节状态发布器，其余两个控制器分别为用 PID 进行关节位置和速度的控制。
+
+用你最喜欢的编辑器 创建launch文件 `urdf/load_controller.launch` 如下：
+
+```xml
+<launch>
+    <rosparam file="$(find rm_controls_tutorials)/config/controllers.yaml" command="load"/>
+    <!-- load the controllers -->
+    <node name="controller_loader" pkg="controller_manager" type="controller_manager"
+          respawn="false" output="screen"
+          args="load
+          controllers/joint_state_controller
+          controllers/joint1_position_controller
+          controllers/joint1_velocity_controller
+"/>
+</launch>
+```
+当仿真运行时，通过以下指令加载控制器
+    mon launch rm_controls_tutorials load_controllers.launch
+
+#### 位置控制器
+停止运行速度控制器，运行位置控制器的指令如下：
+
+```shell
+rosservice call /controller_manager/switch_controller "start_controllers: ['controllers/joint1_position_controller']
+stop_controllers: ['controllers/joint1_velocity_controller']
+strictness: 1
+start_asap: true
+timeout: 0.0" 
+```
+
+通过 rostopic 发送位置指令 `0.0`, 可以观察到 link2 快速移动到水平位置，还改变发送指令的数值观察现象。这时候可以很方便地将各个数据可视化
+
+    rostopic pub /controllers/joint1_position_controller/command std_msgs/Float64 "data: 0.0"
+
+:::tip
+在 ROS 中，所有数据的单位都是国际标准单位，如：角度为 rad，角速度为 rad/s。
+:::
+
+#### 速度控制器
+停止运行位置控制器，运行速度控制器的指令如下：
+
+```shell
+rosservice call /controller_manager/switch_controller "start_controllers: ['controllers/joint1_velocity_controller']
+stop_controllers: ['controllers/joint1_position_controller']
+strictness: 1
+start_asap: true
+timeout: 0.0" 
+```
+
+通过 rostopic 发送位置指令 `3.1415`, 可以观察到 link2 以半圈每秒的速度旋转。
+
+    rostopic pub /controllers/joint1_velocity_controller/command std_msgs/Float64 "data: 3.1415"
 
 ## 在实物中运行
 
