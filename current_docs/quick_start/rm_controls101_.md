@@ -4,7 +4,7 @@ sidebar_position: 1
 ---
 
 # rm-controls 101
-本文将带你建立一个简单的单关节 URDF 并加载到 Gazebo 中，然后先后加载两个 PID 控制器分别对它进行位置和速度控制。
+本文将带你建立一个简单的单关节 URDF 并加载到 Gazebo 中，然后先后加载两个简单的 PID 控制器分别对它进行位置和速度控制。
 环境与依赖：
 * Ubuntu
 * ROS
@@ -22,11 +22,6 @@ sidebar_position: 1
 强烈建议使用 [catkin tools](https://catkin-tools.readthedocs.io/en/latest/) 代替 [catkin_make](http://wiki.ros.org/catkin/commands/catkin_make) 使用 [mon](http://wiki.ros.org/rosmon) 代替 [roslaunch](http://wiki.ros.org/roslaunch) ，后面的教程均使用 catkin_tools 和 rosmon 的指令。
 :::
 
-添加源，用于安装软件包：
-```bash
-
-```
-
 ## 在仿真中运行
 如果只进行简单的单个 3508 驱动的关节仿真，并不需要 rm-controls 的相关代码，可以说本节其实是 ros-control + gazebo 的入门。
 
@@ -38,7 +33,7 @@ sidebar_position: 1
 进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中创建存放本次教程需要用的包 `rm_controls_tutorials`，并使用 `rosdep` 安装包的依赖。
 
 ```shell
-cd ~/ws_ws/src
+cd ~/rm_ws/src
 catkin create pkg rm_controls_tutorials --catkin-deps xacro gazebo_ros_control
 rosdep install --from-paths . --ignore-src
 catkin build
@@ -150,12 +145,12 @@ mkdir urdf launch
 ```
 上述代码创建了一个二连杆，并将 `link1` 固定不动，用 `joint1` 连接 `link2`，每个link都有它的碰撞、外观、惯量的属性。
 
-用你最喜欢的编辑器 创建launch文件 `launch/load_gazebo.launch` 如下：
+用你最喜欢的编辑器 创建launch文件 `urdf/load_gazebo.launch` 如下：
 
 ```xml
 <launch>
     <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
-    <include file="$(find gazebo_ros)/launch/empty_world.launch"></include>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
     <!-- push robot_description to factory and spawn robot in gazebo -->
     <param name="robot_description"
            command="$(find xacro)/xacro $(find rm_controls_tutorials)/urdf/rmrobot.urdf.xacro"/>
@@ -172,7 +167,57 @@ mkdir urdf launch
 
 ![](/img/rm-controls101/gazebo_two_link.gif)
 
-### 添加控制器并运行
+现在你可以尝试控制仿真中的 joint1 : [添加控制器并运行](#添加控制器并运行)
+
+## 在实物中运行
+
+### 准备 CAN 设备
+安装在 Linux 上 SocketCAN 命令行调试工具：
+
+    sudo apt install can-utils
+
+将 3508 的 CAN ID 设为 `0x201`，并将它连接到 can0（注意高低两根线序），如果你在 Intel NUC 或者你的的笔记本上面测试，可以使用 [rm_usb2can](https://github.com/rm-controls/rm_usb2can) 来获得 CAN 接口。运行下列代码：
+
+```shell
+    sudo ip link set can0 up type can bitrate 1000000 
+    candump can0
+```
+
+可以看到接收的 3508 的 CAN 帧：
+
+![candump](/img/rm-controls101/candump.png)
+
+### 配置并运行 rm_hw
+首先需要先安装 rm_hw 及其依赖，你可以选择从包安装或者从源码编译
+#### 从包安装
+
+    sudo apt install ros-noetic-rm-hw
+
+#### 从源码编译
+首先在个人电脑中克隆 `rm-controls` 仓库：
+
+```shell
+git clone git@github.com:rm-controls/rm_control.git #SSH
+#git clone https://github.com/rm-controls/rm_control.git
+```
+
+<details>
+  <summary>
+    如果你要部署到机器人上或使用机器人上的计算设备进行测试
+  </summary>
+  <div>
+    使用 scp 或 CLion 将 rm_msgs、rm_common、rm_hw 传到机器人的 计算设备（mini PC）中。
+  </div>
+</details>
+
+:::caution
+你不应该把仓库直接克隆到机器人计算设备，也不应该将整个 rm-controls 元包传到机器人上。因为 rm-controls 包含了仿真，需要安装许多机器人不需要的仿真和图形依赖。
+:::
+
+使用 `rosdep` 安装依赖
+    rosdep 
+
+## 添加控制器并运行
 用你最喜欢的编辑器 创建控制器的配置文件 `config/controllers.yaml` 如下：
 
 ```yaml
@@ -183,7 +228,7 @@ controllers:
   joint1_position_controller:
     type: effort_controllers/JointPositionController
     joint: joint1
-    pid: { p: 50, i: 0.0, d: 2.5, i_clamp_max: 1, i_clamp_min: -1, antiwindup: true }
+    pid: { p: 30, i: 0.0, d: 0.8, i_clamp_max: 1, i_clamp_min: -1, antiwindup: true }
   joint1_velocity_controller:
     type: effort_controllers/JointVelocityController
     joint: joint1
@@ -192,7 +237,7 @@ controllers:
 
 其中 `joint_state_controller` 是关节状态发布器，其余两个控制器分别为用 PID 进行关节位置和速度的控制。
 
-用你最喜欢的编辑器 创建launch文件 `launch/load_controllers.launch` 如下：
+用你最喜欢的编辑器 创建launch文件 `urdf/load_controller.launch` 如下：
 
 ```xml
 <launch>
@@ -208,8 +253,7 @@ controllers:
 </launch>
 ```
 当仿真运行时，通过以下指令加载控制器
-    
-    mon launch rm_controls_tutorials load_controllers.launch
+mon launch rm_controls_tutorials load_controllers.launch
 
 #### 位置控制器
 停止运行速度控制器，运行位置控制器的指令如下：
@@ -241,17 +285,6 @@ start_asap: true
 timeout: 0.0" 
 ```
 
-通过 rostopic 发送位置指令 `3.1415`, 可以观察到 link2 以半圈每秒的速度旋转。
+通过 rostopic 发送位置指令 `3.1415`, 可以观察到仿真中的 link2 或真实以半圈每秒的速度旋转。
 
     rostopic pub /controllers/joint1_velocity_controller/command std_msgs/Float64 "data: 3.1415"
-
-## 在实物中运行
-
-下述安装是为了后面的教程方便，如果你安装的 ROS 包是 `ros-noetic-desktop-full`，则可以跳过仿真的安装操作。
-### 从包安装
-在终端运行以下代码，即可安装所需依赖：
-
-    sudo apt-get install ros-noetic-rm-base
-
-### 从源码编译
-
