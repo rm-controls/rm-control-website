@@ -22,6 +22,15 @@ sidebar_position: 1
 强烈建议使用 [catkin tools](https://catkin-tools.readthedocs.io/en/latest/) 代替 [catkin_make](http://wiki.ros.org/catkin/commands/catkin_make) 使用 [mon](http://wiki.ros.org/rosmon) 代替 [roslaunch](http://wiki.ros.org/roslaunch) ，后面的教程均使用 catkin_tools 和 rosmon 的指令。
 :::
 
+### 创建放置教程文件的包
+进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中创建存放本次教程需要用的包 `rm_controls_tutorials`
+
+```shell
+cd ~/rm_ws/src
+catkin create pkg rm_controls_tutorials
+catkin build
+```
+
 ## 运行仿真
 如果只进行简单的单个 3508 驱动的关节仿真，并不需要 rm-controls 的相关代码，可以说本节其实是 ros-control + gazebo 的入门。
 
@@ -226,16 +235,16 @@ git clone git@github.com:rm-controls/rm_control.git #SSH
 
 ```yaml
 bus:
-- can0
+  - can0
 loop_frequency: 1000
 cycle_time_error_threshold: 0.001
 
 actuators:
-joint1_motor:
-  bus: can0
-  id: 0x201
-  type: rm_3508
-  lp_cutoff_frequency: 60
+  joint1_motor:
+    bus: can0
+    id: 0x201
+    type: rm_3508
+    lp_cutoff_frequency: 60
 ```
 
 用你最喜欢的编辑器创建 launch 文件 `launch/load_rm_hw.yaml` 如下：
