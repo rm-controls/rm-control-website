@@ -6,11 +6,10 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+# Gazebo 底盘
 :::danger
 从包安装可能无法使用。本文还未完成。
 :::
-# Gazebo 底盘
-
 本文将带你在 Gazebo 仿真中操控麦克纳姆轮以及舵轮底盘。
 
 ## 运行仿真
