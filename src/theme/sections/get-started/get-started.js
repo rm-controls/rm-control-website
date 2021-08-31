@@ -21,7 +21,7 @@ export default function GetStarted() {
       icon: useBaseUrl('http://gazebosim.org/assets/logos/gazebo_vert_pos-faad8cc37ab336f850e549077ef5831e5098034532113b06328dfd70355fb8f7.svg'),
       type: 'plugin',
       label: `在 <span class="${component}__label-highlight">Gazebo</span> 中操控麦克纳姆轮以及舵轮底盘 `,
-      link: useBaseUrl('quick_start/rm-controls_101'),
+      link: useBaseUrl('quick_start/gazebo_chassis'),
     },
   ];
 

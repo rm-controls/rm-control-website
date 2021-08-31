@@ -1,20 +1,26 @@
 ---
 id: gazebo_chassis
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+:::danger
+从包安装可能无法使用。，本文还未完成。
+:::
 # Gazebo 底盘
 
-本文将带你在gazebo仿真中操控麦克纳姆轮以及舵轮底盘。
+本文将带你在 Gazebo 仿真中操控麦克纳姆轮以及舵轮底盘。
 
-## 在仿真中生成机器人
+## 运行仿真
+### 从包安装
 
-### 创建包并安装依赖
+    sudo apt install ros-noetic-rm-rm_gazebo ros-noetic-rm-description
 
-进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中拉取本次教程所要用到的仿真包 `rm_gazebo`，并使用 `rosdep` 安装包的依赖。
+### 从源编译
+
+进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中拉取本 `rm_control`，并使用 `rosdep` 安装包的依赖，并编译。
 
 ```shell
 cd ~/ws_ws/src
@@ -27,7 +33,12 @@ catkin build
 必须确保你的 `rosdep` 安装和初始化是正确的。
 :::
 
-配置好环境变量为目标机器人,hero及其他车是麦克纳姆轮底盘，而standard4是舵轮底盘。
+:::caution
+你**应该**在你的日常开发电脑中执行下述操作；而**不**在机器人上的计算设备上面安装仿真以及可视化相关的包，更不要在上面运行仿真。
+:::
+
+
+将环境变量 `ROBOT_TYPE` 为目标机器人 :
 <Tabs
 groupId="operating-systems"
 defaultValue="麦克纳姆轮"
@@ -40,6 +51,7 @@ values={[
 <TabItem value="舵轮">export ROBOT_TYPE=standard4</TabItem>
 </Tabs>
 
+
 ![](/img/gazebo_chassis/chassis1.png)
 
 ![](/img/gazebo_chassis/chassis2.png)
@@ -50,9 +62,9 @@ values={[
  mon launch rm_gazebo empty_world.launch
 ```
 
-## 运行控制器并操控底盘
+## 运行控制器
 
-### 利用命令行去设置环境变量
+### 从包安装
 
 <Tabs
 groupId="operating-systems"
@@ -77,7 +89,7 @@ rosdep install --from-paths . --ignore-src
 catkin build
 ```
 
-加载底盘控制器
+加载并开始底盘控制器：
 
 ```
  mon launch rm_chassis_controllers load_controllers.launch 
@@ -85,7 +97,7 @@ catkin build
 
 设置底盘的运行模式，并且给其设定一个加速度的指令如下：
 
-```
+```shell
 rostopic pub /controllers/chassis_controller/command rm_msgs/ChassisCmd "mode: 0
 accel:
   linear: {x: 0.0, y: 0.0, z: 0.0}
@@ -97,7 +109,7 @@ stamp: {secs: 0, nsecs: 0}"
 
 设置底盘速度，让其运动的指令如下：
 
-```
+```shell
 rostopic pub /cmd_vel geometry_msgs/Twist "linear:
   x: 0.0
   y: 0.0
@@ -107,12 +119,3 @@ angular:
   y: 0.0
   z: 0.0" 
 ```
-
-### 利用工具Message Publisher控制底盘
-
-在rqt工具v中找到Message Publisher并打开
-
-找到话题/controllers/chassis_controller/command和/cmd_vel，并设置对应的数据
-
-通过打勾去完成话题消息的发送。
-
