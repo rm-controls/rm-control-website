@@ -31,6 +31,11 @@ catkin create pkg rm_controls_tutorials
 catkin build
 ```
 
+```shell
+cd rm_controls_tutorials
+mkdir urdf launch config
+```
+
 ## 运行仿真
 如果只进行简单的单个 3508 驱动的关节仿真，并不需要 rm-controls 的相关代码，可以说本节其实是 ros-control + gazebo 的入门。
 
@@ -38,26 +43,9 @@ catkin build
 你**应该**在你的日常开发电脑中执行下述操作；而**不**在机器人上的计算设备上面安装仿真以及可视化相关的包，更不要在上面运行仿真。我们推荐为机器人安装 [Ubuntu server](https://ubuntu.com/download/server) ，通过 `ssh` 来访问机器人。
 :::
 
-### 创建包并安装依赖
-进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中创建存放本次教程需要用的包 `rm_controls_tutorials`，并使用 `rosdep` 安装包的依赖。
+安装依赖:
 
-```shell
-cd ~/rm_ws/src
-catkin create pkg rm_controls_tutorials --catkin-deps xacro gazebo_ros_control
-rosdep install --from-paths . --ignore-src
-catkin build
-```
-
-:::tip
-必须确保你的 `rosdep` 安装和初始化是正确的。
-:::
-
-创建 urdf、 launch、config 文件夹
-
-```shell
-cd rm_controls_tutorials
-mkdir urdf launch
-```
+    sudo apt install ros-noetic-xacro ros-noetic-gazebo-ros-control
 
 ### 创建 URDF 并运行仿真
 
@@ -152,7 +140,7 @@ mkdir urdf launch
     </gazebo>
 </robot>
 ```
-上述代码创建了一个二连杆，并将 `link1` 固定不动，用 `joint1` 连接 `link2`，每个link都有它的碰撞、外观、惯量的属性。
+上述代码创建了一个简单二连杆，并将 `link1` 固定不动，用 `joint1` 连接 `link2`，每个link都有它的碰撞、外观、惯量的属性。
 
 用你最喜欢的编辑器 创建launch文件 `launch/load_gazebo.launch` 如下：
 
@@ -176,7 +164,7 @@ mkdir urdf launch
 
 ![](/img/rm-controls101/gazebo_two_link.gif)
 
-现在你可以尝试控制仿真中的 joint1 : [添加控制器并运行](#添加控制器并运行)
+现在你可以尝试控制仿真中的 joint1 : [运行控制器](#运行控制器)
 
 ## 运行实物
 
@@ -322,7 +310,7 @@ timeout: 0.0"
 ```
 使用 rostopic 获取 `joint1` 的状态，转动 3508 的输出轴观察数据。
 
-    rostopic echo /actuator_states
+    rostopic echo /joint_states
 
 ![](/img/rm-controls101/joint_states.png)
 
@@ -363,3 +351,7 @@ timeout: 0.0"
 通过 rostopic 发送位置指令 `3.1415`, 可以观察到仿真中的 link2 或真实电机以半圈每秒的速度旋转。
 
     rostopic pub /controllers/joint1_velocity_controller/command std_msgs/Float64 "data: 3.1415"
+
+## TODO可视化
+ROS 提供了非常多的可视化工具，你可以绘制电机各个数据的图像、查看各个坐标系的关系、动态调整PID 参数。
+### rqt_multiplot 数据绘图
