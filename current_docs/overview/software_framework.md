@@ -1,6 +1,6 @@
 ---
 id: software_framework
-sidebar_position: 1
+sidebar_position: 3
 ---
 
 # 软件框架
