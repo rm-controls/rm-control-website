@@ -4,17 +4,22 @@ sidebar_position: 4
 ---
 
 # Road Map
-## README 文档
+## 文档
+### README
 * [x] Why rm-controls?
 * [ ] rm-controls 101
 * [ ] Gazebo 底盘
 * [ ] rm_engineer
 * [ ] rm_dbus
+* [ ] rm_bringup
 
-## Doxygen 文档
+### Doxygen 
 * [x] rm_hw
 * [x] rm_calibration_controllers
-* [ ] ...
+* [ ] rm_gazebo
+* [ ] rm_chassis_controllers
+* [ ] rm_gimbal_controllers
+* [ ] rm_shooter_controllers
 
 ## IO
 本项目的较大缺点是 IO 数量种类太少，因此开发对应的转接模块和对应测试接口
