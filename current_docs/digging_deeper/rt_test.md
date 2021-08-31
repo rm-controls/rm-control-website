@@ -7,13 +7,16 @@ sidebar_position: 4
 ## 安装测试脚本
 测试脚本在rm_bringup中，点击[此处](https://github.com/rm-controls/rm_bringup),
 将此仓库拉到本地即可。
+
 ## 安装脚本依赖
 `sudo apt install rt-tests stress gnuplot`
+
 ## 进行测试
 ### 进入脚本所在文件夹并运行实时性测试脚本
-`cd rm_bringup/scripts`
-
-`sudo sh ./rh-test.sh`
+```shell
+cd rm_bringup/scripts
+sudo sh ./rh-test.sh
+```
 
 ### 等待测试完成,测试结果会生成图片放在测试脚本所在文件夹
 
