@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # 实时内核的编译
 
-RT-Preempt Patch 是在 Linux 社区kernel的基础上，加上相关的补丁，以使得Linux满足硬实时的需求。下面是编译配置流程，以内核 `5.6.19` 为例。
+[RT-Preempt](https://rt.wiki.kernel.org/index.php/Main_Page) 是在 Linux 社区kernel的基础上，加上相关的补丁，以使得Linux满足硬实时的需求。下面是编译配置流程，以内核 `5.6.19` 为例。
 
 ## 下载内核及rt补丁
 
