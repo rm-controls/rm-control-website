@@ -3,6 +3,10 @@ id: rm-controls_101
 sidebar_position: 1
 ---
 
+:::danger
+从包安装可能无法使用。本文还未完成。
+:::
+
 # rm-controls 101
 本文将带你建立一个简单的单关节 URDF 并加载到 Gazebo 中，然后先后加载两个简单的 PID 控制器分别对它进行位置和速度控制。
 环境与依赖：

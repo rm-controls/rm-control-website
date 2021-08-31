@@ -7,7 +7,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 :::danger
-从包安装可能无法使用。，本文还未完成。
+从包安装可能无法使用。本文还未完成。
 :::
 # Gazebo 底盘
 
