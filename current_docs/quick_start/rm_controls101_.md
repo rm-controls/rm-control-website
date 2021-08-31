@@ -264,7 +264,7 @@ actuators:
 则需要设置 [`sudo` 免密码](https://www.cyberciti.biz/faq/linux-unix-running-sudo-command-without-a-password/) 。 如果遇到类似 warning：
 > [RmRobotHWLoop::update]: Cycle time exceeded error threshold by: 0.0017126s, cycle time: 0.003712596s, threshold: 0.001s
 
-为实时性问题，需要更换实时内核。对于 Intel NUC 我们推荐使用 `linux-xanmod-rt` 内核，如果是 Jetson 系列或者 妙算2，需要参阅其他资料，可以参考 [实时内核的编译](digging_deeper/rt_kernel.md) 的通用步骤。
+为实时性问题，需要更换实时内核。对于 Intel NUC 我们推荐使用 [`linux-xanmod-rt`](https://xanmod.org/) 内核，如果是 Jetson 系列或者 妙算2，需要参阅其他资料，可以参考 [实时内核的编译](digging_deeper/rt_kernel.md) 的通用步骤。
 
 ###
 
