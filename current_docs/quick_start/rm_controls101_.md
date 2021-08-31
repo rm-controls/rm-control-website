@@ -3,11 +3,12 @@ id: rm-controls_101
 sidebar_position: 1
 ---
 
+# rm-controls 101
+
 :::danger
 从包安装可能无法使用。本文还未完成。
 :::
 
-# rm-controls 101
 本文将带你建立一个简单的单关节 URDF 并加载到 Gazebo 中，然后先后加载两个简单的 PID 控制器分别对它进行位置和速度控制。
 环境与依赖：
 * Ubuntu
@@ -257,6 +258,15 @@ actuators:
 
     mon launch rm_controls_tutorials load_rm_hw.launch
 
+如果出现了错误：
+> [main]: Set scheduler failed, RUN THIS NODE AS SUPER USER.
+
+则需要设置 [`sudo` 免密码](https://www.cyberciti.biz/faq/linux-unix-running-sudo-command-without-a-password/) 。 如果遇到类似 warning：
+> [RmRobotHWLoop::update]: Cycle time exceeded error threshold by: 0.0017126s, cycle time: 0.003712596s, threshold: 0.001s
+
+为实时性问题，需要更换实时内核。对于 Intel NUC 我们推荐使用 `linux-xanmod-rt` 内核，如果是 Jetson 系列或者 妙算2，需要参阅其他资料，可以参考 [实时内核的编译](digging_deeper/rt_kernel.md) 的通用步骤。
+
+###
 
 ## 运行控制器
 用你最喜欢的编辑器创建控制器的配置文件 `config/controllers.yaml` 如下：
