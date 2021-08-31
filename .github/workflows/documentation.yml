@@ -43,7 +43,6 @@ jobs:
           DEPLOYMENT_BRANCH: gh-pages
         run: |
           sudo apt install curl > /dev/null
-          mkdir -p current_docs/digging_deeper/controllers
           curl https://raw.githubusercontent.com/rm-controls/rm_controllers/master/rm_calibration_controllers/README.md > current_docs/digging_deeper/controllers/rm_calibration_controllers.md
           curl https://raw.githubusercontent.com/rm-controls/rm_controllers/master/rm_chassis_controllers/README.md > current_docs/digging_deeper/controllers/rm_chassis_controllers.md
           curl https://raw.githubusercontent.com/rm-controls/rm_controllers/master/rm_gimbal_controllers/README.md > current_docs/digging_deeper/controllers/rm_gimbal_controllers.md
