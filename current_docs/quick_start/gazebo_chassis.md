@@ -113,7 +113,8 @@ angular:
 3. 2代表GYRO模式，是小陀螺模式，底盘以自身为中心旋转。
 4. 3代表TWIST模式，是扭腰模式，底盘的转动不会受云台方向影响。
 
-具体参见[底盘文档](https://github.com/rm-controls/rm_controllers/blob/master/rm_chassis_controllers/README.md)
+详见[rm_chassis_controllers/README](https://github.com/rm-controls/rm_controllers/blob/master/rm_chassis_controllers/README.md)
+
 
 ### 利用工具Message Publisher控制底盘
 
