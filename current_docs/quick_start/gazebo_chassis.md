@@ -107,6 +107,13 @@ angular:
   y: 0.0
   z: 0.0" 
 ```
+设置mode的序号去设置底盘模式其中:
+1. 0代表RAW模式，是底盘的初始状态，是底盘的初始状态，此模式下底盘无法运动。
+2. 1代表FOLLOW模式，是云台跟随模式，底盘跟随着云台的方向运动。
+3. 2代表GYRO模式，是小陀螺模式，底盘以自身为中心旋转。
+4. 3代表TWIST模式，是扭腰模式，底盘的转动不会受云台方向影响。
+
+具体参见[底盘文档](https://github.com/rm-controls/rm_controllers/blob/master/rm_chassis_controllers/README.md)
 
 ### 利用工具Message Publisher控制底盘
 
