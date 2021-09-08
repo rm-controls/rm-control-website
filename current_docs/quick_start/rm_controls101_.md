@@ -4,6 +4,11 @@ sidebar_position: 1
 ---
 
 # rm-controls 101
+
+:::danger
+从包安装可能无法使用。本文还未完成。
+:::
+
 本文将带你建立一个简单的单关节 URDF 并加载到 Gazebo 中，然后先后加载两个简单的 PID 控制器分别对它进行位置和速度控制。
 环境与依赖：
 * Ubuntu
@@ -22,6 +27,20 @@ sidebar_position: 1
 强烈建议使用 [catkin tools](https://catkin-tools.readthedocs.io/en/latest/) 代替 [catkin_make](http://wiki.ros.org/catkin/commands/catkin_make) 使用 [mon](http://wiki.ros.org/rosmon) 代替 [roslaunch](http://wiki.ros.org/roslaunch) ，后面的教程均使用 catkin_tools 和 rosmon 的指令。
 :::
 
+### 创建放置教程文件的包
+进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中创建存放本次教程需要用的包 `rm_controls_tutorials`
+
+```shell
+cd ~/rm_ws/src
+catkin create pkg rm_controls_tutorials
+catkin build
+```
+
+```shell
+cd rm_controls_tutorials
+mkdir urdf launch config
+```
+
 ## 运行仿真
 如果只进行简单的单个 3508 驱动的关节仿真，并不需要 rm-controls 的相关代码，可以说本节其实是 ros-control + gazebo 的入门。
 
@@ -29,26 +48,9 @@ sidebar_position: 1
 你**应该**在你的日常开发电脑中执行下述操作；而**不**在机器人上的计算设备上面安装仿真以及可视化相关的包，更不要在上面运行仿真。我们推荐为机器人安装 [Ubuntu server](https://ubuntu.com/download/server) ，通过 `ssh` 来访问机器人。
 :::
 
-### 创建包并安装依赖
-进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中创建存放本次教程需要用的包 `rm_controls_tutorials`，并使用 `rosdep` 安装包的依赖。
+安装依赖:
 
-```shell
-cd ~/rm_ws/src
-catkin create pkg rm_controls_tutorials --catkin-deps xacro gazebo_ros_control
-rosdep install --from-paths . --ignore-src
-catkin build
-```
-
-:::tip
-必须确保你的 `rosdep` 安装和初始化是正确的。
-:::
-
-创建 urdf、 launch、config 文件夹
-
-```shell
-cd rm_controls_tutorials
-mkdir urdf launch config
-```
+    sudo apt install ros-noetic-xacro ros-noetic-gazebo-ros-control
 
 ### 创建 URDF 并运行仿真
 
@@ -143,7 +145,7 @@ mkdir urdf launch config
     </gazebo>
 </robot>
 ```
-上述代码创建了一个二连杆，并将 `link1` 固定不动，用 `joint1` 连接 `link2`，每个link都有它的碰撞、外观、惯量的属性。
+上述代码创建了一个简单二连杆，并将 `link1` 固定不动，用 `joint1` 连接 `link2`，每个link都有它的碰撞、外观、惯量的属性。
 
 用你最喜欢的编辑器 创建launch文件 `launch/load_gazebo.launch` 如下：
 
@@ -167,7 +169,7 @@ mkdir urdf launch config
 
 ![](/img/rm-controls101/gazebo_two_link.gif)
 
-现在你可以尝试控制仿真中的 joint1 : [添加控制器并运行](#添加控制器并运行)
+现在你可以尝试控制仿真中的 joint1 : [运行控制器](#运行控制器)
 
 ## 运行实物
 
@@ -226,16 +228,16 @@ git clone git@github.com:rm-controls/rm_control.git #SSH
 
 ```yaml
 bus:
-- can0
+  - can0
 loop_frequency: 1000
 cycle_time_error_threshold: 0.001
 
 actuators:
-joint1_motor:
-  bus: can0
-  id: 0x201
-  type: rm_3508
-  lp_cutoff_frequency: 60
+  joint1_motor:
+    bus: can0
+    id: 0x201
+    type: rm_3508
+    lp_cutoff_frequency: 60
 ```
 
 用你最喜欢的编辑器创建 launch 文件 `launch/load_rm_hw.launch` 如下：
@@ -256,6 +258,15 @@ joint1_motor:
 
     mon launch rm_controls_tutorials load_rm_hw.launch
 
+如果出现了错误：
+> [main]: Set scheduler failed, RUN THIS NODE AS SUPER USER.
+
+则需要设置 [`sudo` 免密码](https://www.cyberciti.biz/faq/linux-unix-running-sudo-command-without-a-password/) 。 如果遇到类似 warning：
+> [RmRobotHWLoop::update]: Cycle time exceeded error threshold by: 0.0017126s, cycle time: 0.003712596s, threshold: 0.001s
+
+为实时性问题，需要更换实时内核。对于 Intel NUC 我们推荐使用 [`linux-xanmod-rt`](https://xanmod.org/) 内核，如果是 Jetson 系列或者 妙算2，需要参阅其他资料，可以参考 [实时内核的编译](digging_deeper/rt_kernel.md) 的通用步骤。
+
+###
 
 ## 运行控制器
 用你最喜欢的编辑器创建控制器的配置文件 `config/controllers.yaml` 如下：
@@ -313,7 +324,7 @@ timeout: 0.0"
 ```
 使用 rostopic 获取 `joint1` 的状态，转动 3508 的输出轴观察数据。
 
-    rostopic echo /actuator_states
+    rostopic echo /joint_states
 
 ![](/img/rm-controls101/joint_states.png)
 
@@ -354,3 +365,7 @@ timeout: 0.0"
 通过 rostopic 发送位置指令 `3.1415`, 可以观察到仿真中的 link2 或真实电机以半圈每秒的速度旋转。
 
     rostopic pub /controllers/joint1_velocity_controller/command std_msgs/Float64 "data: 3.1415"
+
+## TODO可视化
+ROS 提供了非常多的可视化工具，你可以绘制电机各个数据的图像、查看各个坐标系的关系、动态调整PID 参数。
+### rqt_multiplot 数据绘图
