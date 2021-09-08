@@ -107,14 +107,17 @@ angular:
   y: 0.0
   z: 0.0" 
 ```
+
 设置mode的序号去设置底盘模式其中:
+
 1. 0代表RAW模式，是底盘的初始状态，是底盘的初始状态，此模式下底盘无法运动。
 2. 1代表FOLLOW模式，是云台跟随模式，底盘跟随着云台的方向运动。
 3. 2代表GYRO模式，是小陀螺模式，底盘以自身为中心旋转。
 4. 3代表TWIST模式，是扭腰模式，底盘的转动不会受云台方向影响。
 
-详见[rm_chassis_controllers/README](https://github.com/rm-controls/rm_controllers/blob/master/rm_chassis_controllers/README.md)
+在accel中设置底盘的线和角加速度，设置好后发送底盘一个速度指令后会在仿真中观察到底盘的运动。
 
+详见[rm_chassis_controllers/README](https://github.com/rm-controls/rm_controllers/blob/master/rm_chassis_controllers/README.md)
 
 ### 利用工具Message Publisher控制底盘
 
