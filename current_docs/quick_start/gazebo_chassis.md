@@ -58,8 +58,10 @@ values={[
 启动目标机器人的仿真
 
 ```shell
- mon launch rm_gazebo empty_world.launch
+ mon launch rm_gazebo empty_world.launch load_gimbal:= false load_shooter:= false
 ```
+启动了目标机器人仿真的同时禁止加载机器人的云台和发射机构（当云台机构未加载的时候，如果加载发射机构会产生报错）
+，因为我们此次的目标是在仿真中去控制底盘的运动。
 
 ## 运行控制器
 
@@ -91,10 +93,18 @@ catkin build
 加载并开始底盘控制器：
 
 ```
- mon launch rm_chassis_controllers load_controllers.launch 
+ mon launch rm_chassis_controllers load_controllers.launch
 ```
 
-设置底盘的运行模式，并且给其设定一个加速度的指令如下：
+设置mode的序号去设置底盘模式其中:
+
+
+1. 0代表RAW模式，是底盘的初始状态，是底盘的初始状态，此模式下底盘无法运动。
+2. 1代表FOLLOW模式，是云台跟随模式，底盘跟随着云台的方向运动。
+3. 2代表GYRO模式，是小陀螺模式，底盘以自身为中心旋转。
+4. 3代表TWIST模式，是扭腰模式，底盘的转动不会受云台方向影响。
+
+设置accel（加速度），去设置底盘的线和角加速度并且在power_limit中去设置底盘的限制功率。
 
 ```shell
 rostopic pub /controllers/chassis_controller/command rm_msgs/ChassisCmd "mode: 0
@@ -109,7 +119,7 @@ stamp: {secs: 0, nsecs: 0}"
 设置底盘速度，让其运动的指令如下：
 
 ```shell
-rostopic pub /cmd_vel geometry_msgs/Twist "linear:
+rostopic pub -r 100 /cmd_vel geometry_msgs/Twist "linear:
   x: 0.0
   y: 0.0
   z: 0.0
@@ -118,3 +128,58 @@ angular:
   y: 0.0
   z: 0.0" 
 ```
+
+发送以上指令去控制底盘的运动，其中需要加入参数-r 100,意思是以频率为100hz的速度去发布命令，当频率设置的较小会观察到底盘运动的一卡一卡的现象。
+因为在实车上为了防止机器人失去控制，底盘的逻辑是当未接受到指令的时候，速度会自动置0。
+
+详见[rm_chassis_controllers/README](https://github.com/rm-controls/rm_controllers/blob/master/rm_chassis_controllers/README.md)
+
+示例如下：
+示例1：
+
+```shell
+rostopic pub /controllers/chassis_controller/command rm_msgs/ChassisCmd "mode: 0
+accel:
+  linear: {x: 1.0, y: 1.0, z: 1.0}
+  angular: {x: 1.0, y: 1.0, z: 1.0}
+power_limit: 200.0
+follow_source_frame: ''
+stamp: {secs: 0, nsecs: 0}" 
+```
+输入以上指令后会在rm_gazebo的终端中观察到底盘的状态变化为FOLLOW，此时可通过topic“cmd-vel”去控制底盘的运动。
+
+```shell
+rostopic pub -r 100 /cmd_vel geometry_msgs/Twist "linear:
+  x: 1.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0" 
+```
+输入以上指令后观察到底盘直线运动。
+
+示例2：
+
+```shell
+rostopic pub /controllers/chassis_controller/command rm_msgs/ChassisCmd "mode: 2
+accel:
+  linear: {x: 2.0, y: 2.0, z: 2.0}
+  angular: {x: 0.0, y: 0.0, z: 10.0}
+power_limit: 200.0
+follow_source_frame: ''
+```
+输入以上指令后会在rm_gazebo的终端中观察到底盘的状态变化为GYRO，并且设置了底盘的线加速度和角加速度，此时可通过topic“cmd-vel”去控制底盘旋转着运动。
+
+```shell
+rostopic pub -r 100 /cmd_vel geometry_msgs/Twist "linear:
+  x: 1.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 2.0" 
+```
+输入以上指令后观察到底盘旋转着做直线运动。
