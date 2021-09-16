@@ -3,7 +3,11 @@ id: code_style
 sidebar_position: 1
 ---
 
+<<<<<<< HEAD
 # MoveIt Code Style Guidelines
+=======
+# Code specification
+>>>>>>> e96cc0ad1a466c36c308d5d3a6c9fba52ea5ef76
 
 We use the [ROS C++ Style guide](http://wiki.ros.org/CppStyleGuide) for C++ development and (rarely) the [ROS Python Style guide](http://wiki.ros.org/) for Python development. PyStyleGuide), you can also use [ros_best_pracitces](https://github.com/leggedrobotics/ros_best_practices) as a template reference.
 
@@ -19,7 +23,7 @@ In addition rm-controls has some additional style preferences.
  - When functions are not available in the standard library, use of the Boost library is encouraged
  - Use ``#pragma once`` in the title instead of "include guards"
 
-## Inline Documentation
+## In-code documentation
 
  - We use Doxygen-style comments
  - For future work, use ``TODO(username): description``
@@ -29,7 +33,11 @@ In addition rm-controls has some additional style preferences.
 
 ## Exceptions
  - Catch known exceptions and document them in detail. Avoid using ``catch (...) `` because it hides information about possible failures. We want to know if there is a problem.
+<<<<<<< HEAD
  - We don’t catch exceptions that don’t derive from ``std::exception``in MoveIt. It is the responsibility of the plugin provider to handle non-``std::exception``-derived exceptions locally.
+=======
+
+>>>>>>> e96cc0ad1a466c36c308d5d3a6c9fba52ea5ef76
 ## Logging
 
  - Use ROS logging functions and namespaces like: ``ROS_INFO_NAMED(LOGNAME, "Starting listener... ``.
@@ -170,4 +178,8 @@ for (const int & item : container)
 ```
 
 ## Credits
+<<<<<<< HEAD
 This file come from the [MoveIt Code Style Guidelines](https://moveit.ros.org/documentation/contributing/code/).
+=======
+This file is translated from the [MoveIt Code Style Guidelines](https://moveit.ros.org/documentation/contributing/code/).
+>>>>>>> e96cc0ad1a466c36c308d5d3a6c9fba52ea5ef76
