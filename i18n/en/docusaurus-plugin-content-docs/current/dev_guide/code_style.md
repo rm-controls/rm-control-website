@@ -9,9 +9,9 @@ sidebar_position: 1
 # Code specification
 >>>>>>> e96cc0ad1a466c36c308d5d3a6c9fba52ea5ef76
 
-We use the [ROS C++ Style guide](http://wiki.ros.org/CppStyleGuide) for C++ development and (rarely) the [ROS Python Style guide](http://wiki.ros.org/) for Python development. PyStyleGuide), you can also use [ros_best_pracitces](https://github.com/leggedrobotics/ros_best_practices) as a template reference.
+We use the [ROS C++ Style guide](http://wiki.ros.org/CppStyleGuide) for C++ development and (rarely) the [ROS Python Style guide](http://wiki.ros.org/) for Python.
 
-To make your development easier, we recommend using ``clang-format`` with ROS configuration and the CLion IDE - see below for details.
+To make your development easier, we recommend using ``clang-format`` with ROS configuration and the CLion IDE - to see below for details.
 
 In addition rm-controls has some additional style preferences.
 
@@ -21,9 +21,10 @@ In addition rm-controls has some additional style preferences.
  - Use the C++ standard library (``std::``) whenever possible 
  - Avoid using C-style functions such as ``FLT_EPSILON`` and ``(int)()`` - instead use ``std::numeric_limits<double>::epsilon()`` and ``static_cast<int>()``
  - When functions are not available in the standard library, use of the Boost library is encouraged
+ - Boost is an encouraged library when functionality is not available in the standard library
  - Use ``#pragma once`` in the title instead of "include guards"
 
-## In-code documentation
+## Inline documentation
 
  - We use Doxygen-style comments
  - For future work, use ``TODO(username): description``
@@ -61,7 +62,9 @@ This will result in.
 
  - Add an associated TODO describing when the feature will be removed (date and/or ROS version)
 
-
+## Shared Ptrs
+  - For creating ``shared_ptr`` of any object, use MoveIt’s standard `macro` ``MOVEIT_CLASS_FORWARD(ClassName)`` before the class declaration, and add the include ``#include <moveit/macros/class_forward.h>``. This will create two typedefs of shared pointers - ``<ClassName>Ptr`` and ``<ClassName>ConstPtr`` using either ``boost`` or ``std``.
+  
 ## pre-commit format checker
 
 In many of our repositories, there is a [pre-commit](https://pre-commit.com/) check that runs in CI.
@@ -117,6 +120,9 @@ But please use it carefully.
 Too much of a headache to use the command line? Try [CLion IDE configuration](. /ide_config).
 
 :::
+
+### QtCreator Editor Configuration
+- Navigate to ``Tools > Options > Beautifier`` On the ``General`` tab, enable auto format on file save, using ``ClangFormat``. On the ``Clang Format`` tab, configure ``clang-format-10`` as your executable and choose ``Use predefined style`` from ``File``.
 
 ## clang-tidy Linting
 
