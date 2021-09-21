@@ -1,6 +1,6 @@
 ---
-id: gazebo_chassis1
-sidebar_position: 3
+id: gazebo_chassis
+sidebar_position: 2
 ---
 
 import Tabs from '@theme/Tabs';
