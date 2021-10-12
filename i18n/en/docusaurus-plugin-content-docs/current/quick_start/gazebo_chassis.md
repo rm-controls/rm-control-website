@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 :::danger
 Installing from a package may not work. This article is not yet complete.
 :::
-This article will take you through the manipulation of the McNamee wheel and the rudder wheel chassis in the Gazebo simulation.
+This article will take you through the manipulation of the mecanum wheels robot and the swerve drive robot chassis in the Gazebo simulation.
 
 ## Running the simulation
 ### Installing from the package
@@ -19,7 +19,7 @@ This article will take you through the manipulation of the McNamee wheel and the
 
 ### Compile from source
 
-Go to your workspace (assuming it is named ``rm_ws``), pull this ``rm_control` in your workspace and install the package dependencies using ``rosdep`` and compile.
+Go to your workspace (assuming it is named ``rm_ws``), pull this ``rm_control`` in your workspace and install the package dependencies using ``rosdep`` and compile.
 
 ```shell
 cd ~/ws_ws/src
@@ -62,6 +62,8 @@ Start the simulation of the target robot
  mon launch rm_gazebo empty_world.launch
 ```
 
+The target robot simulation is started while the robot's gimbal and launch mechanism are disabled (loading the launch mechanism when the gimbal mechanism is not loaded will generate an error), because our goal is to control the motion of the chassis in the simulation.
+
 ## Run the controller
 
 ### Install from package
@@ -80,9 +82,9 @@ values={[
 
 ### Controlling the chassis with the command line
 
-Go to your workspace (assuming it is named ``rm_ws``), pull the simulation package ``rm_chassis_controllers` that you will use for this tutorial in your workspace, and install the package dependencies using ``rosdep``.
+Go to your workspace (assuming it is named ``rm_ws``), pull the simulation package ``rm_chassis_controllers`` that you will use for this tutorial in your workspace, and install the package dependencies using ``rosdep``.
 
-``shell
+```shell
 cd ~/ws_ws/src
 git clone https://github.com/rm-controls/rm_controllers.git
 rosdep install --from-paths . --ignore-src
@@ -95,7 +97,19 @@ Load and start the chassis controller.
  mon launch rm_chassis_controllers load_controllers.launch 
 ```
 
-The command to set the chassis operating mode and give it an acceleration is as follows.
+Set the serial number of mode to set the chassis mode where:
+
+1. 0 represents RAW mode, it is the initial state of the chassis, it is the initial state of the chassis, the chassis cannot move in this mode.
+
+2. 1 represents FOLLOW mode, is the gimbal follow mode, the chassis follow the direction of the gimbal movement.
+
+3. 2 represents GYRO mode, is the small gyro mode, the chassis rotates with itself as the center.
+
+4. 3 represents TWIST mode, it is twist mode, the rotation of the chassis will not be affected by the direction of the gimbal.
+
+
+Set accel(acceleration), set the linear and angular acceleration of the chassis and set the limit power of the chassis in power_limit.
+
 
 ```shell
 rostopic pub /controllers/chassis_controller/command rm_msgs/ChassisCmd "mode: 0

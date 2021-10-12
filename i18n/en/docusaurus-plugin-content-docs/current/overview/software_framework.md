@@ -11,19 +11,19 @@ If you are not familiar with ros-controls, please read [prerequisite](#prerequis
 
 :::
 
-The rm-controls program consists of several ROS packages, including the metapackage: `rm_control` which provides a common interface to the underlying hardware and emulation, the metapackage `rm_controllers` which is the controller for each common module, and the package `rm_manual` which is responsible for general robot operations and the sentry decision package `rm_fsm`.
+The rm-controls program consists of several ROS packages, including the metapackage: `rm_control` which provides a common interface to the underlying hardware and simulation, the metapackage `rm_controllers` which is the controller for each common module, and the package `rm_manual` which is responsible for general robot operations and the sentry decision package `rm_fsm`.
 * rm_control
   * rm_msgs: Customized ROS topic messages, services, actions
   * rm_common: common functions, algorithms, referee system send/receive, ui
   * rm_description: URDF for all robots, defines: relations between robot coordinate systems, mapping of motors and joints, joint limits, physical properties needed for simulation
-  * rm_hw: Node of the same name communicates with the actuator through SocketCAN to get data and send commands, providing hardware interface to the controller when the real vehicle is running
+  * rm_hw: Node of the same name communicates with the actuator through SocketCAN to get data and send commands, providing hardware interface to the controller when the real robot is running
   * rm_gazebo: The same name Gazebo Plugin provides hardware interface to the controller during simulation runtime
   * rm_dbus: dbus remote control driver receiver node
 * rm_controllers
   * robot_state_controller: high performance version of robot_state_publisher, high frequency maintenance tf
-  * rm_chassis_controllers: chassis controllers for McNamee wheels, tiller wheels, and balance bikes
+  * rm_chassis_controllers: chassis controllers for mecanum wheels robot, swerve drive robot, and balancing chassis robot
   * rm_gimbal_controllers: head controllers with shooting model and tracking filter prediction
-  * rm_shooter_controllers: controllers that operate friction wheels, paddles and complete launch controllers
+  * rm_shooter_controllers: controllers that operate friction wheels and trigger to shoot
   * rm_calibration_controllers: controllers for calibrating actuator positions
 * rm_manual: general robot decision making
 * rm_fsm: sentry robot decision
@@ -37,7 +37,7 @@ As shown above, the controller gets the `handle` of each sensor and actuator fro
 
 ## Prerequisite
 
-The following describes the mechanisms involved in ros-control in the physical and Gazebo emulations.
+The following describes the mechanisms involved in ros-control in the physical and Gazebo simulations.
 ### ros-control with real hardware
 In the figure below, ros-control provides a mechanism whereby sensor data such as encoders of actuators are read and mapped to robot states such as joints via [`TransmissionsInterface`](http://wiki.ros.org/transmission_interface). Joint) and other robot states, and provide these state interfaces to the controller; after the controller calculates and obtains the joint commands with restrictions, then maps them to motor commands and sends them to the motor. The controller manager can load, start and stop various controllers in real time (compiled as a dynamic library).
 

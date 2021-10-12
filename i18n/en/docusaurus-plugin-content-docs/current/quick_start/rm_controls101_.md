@@ -185,7 +185,7 @@ Set the CAN ID of the 3508 to `0x201` and connect it to can0 (note the high and 
     candump can0
 ```
 
-You can see the received CAN frame of 3508: !
+You can see the received CAN frame of 3508:
 
 ![candump](/img/rm-controls101/candump.png)
 
@@ -198,7 +198,7 @@ First you need to install rm_hw and its dependencies, you can choose to install 
 #### Compile from source
 First clone the ``rm-controls`` repository in your PC: ```shell
 
-``shell
+```shell
 git clone git@github.com:rm-controls/rm_control.git #SSH
 #git clone https://github.com/rm-controls/rm_control.git
 ```
@@ -264,7 +264,7 @@ If there is an error.
 Then you need to set [`sudo` password free](https://www.cyberciti.biz/faq/linux-unix-running-sudo-command-without-a-password/). If you encounter a warning like.
 > [RmRobotHWLoop::update]: Cycle time exceeded error threshold by: 0.0017126s, cycle time: 0.003712596s, threshold: 0.001s
 
-For real-time issues, you need to replace the real-time kernel. For Intel NUC we recommend using [`linux-xanmod-rt`](https://xanmod.org/) kernel, for Jetson series or Mythic 2, you can refer to [compiling real-time kernel](digging_deeper/rt_kernel.md) for more information. steps.
+For real-time issues, you need to replace the real-time kernel. For Intel NUC we recommend using [`linux-xanmod-rt`](https://xanmod.org/) kernel, for Jetson series or Manifo 2G, you can refer to [compiling real-time kernel](digging_deeper/rt_kernel.md) for more information. steps.
 
 ###
 
@@ -308,7 +308,7 @@ When Gazebo or rm_hw is running, the controllers are loaded with the following c
     mon launch rm_controls_tutorials load_controllers.launch
 
 ### State fetching
-Use rostopic to get the status of the actuator (3508 motor) and rotate the rotor of the 3508 to observe the data.
+Use rostopic to get the state of the actuator (3508 motor) and rotate the rotor of the 3508 to observe the data.
 
     rostopic echo /actuator_states
 

@@ -125,12 +125,12 @@ Too much of a headache to use the command line? Try [CLion IDE configuration](. 
 (incorrect indentation, line length, etc.), while **clang-tidy** will fix programming errors to make your code
 more modern, more readable, and less prone to common errors.
 
-You can install clang-tidy and other clang-related tools
+You can install **clang-tidy** and other **clang-related** tools
 `sudo apt install clang-tidy clang-tools`
 
-Similar to clang-format, clang-tidy uses the configuration file `.clang-tidy` that is found first when traversing up the source folder hierarchy. All rm-controls repositories provide the same file in the repository root file.
+Similar to **clang-format**, **clang-tidy** uses the configuration file `.clang-tidy` that is found first when traversing up the source folder hierarchy. All rm-controls repositories provide the same file in the repository root file.
 
-Unlike clang-format, clang-tidy needs to know the exact compiler options used to build the project. To provide them, configure cmake with `-DCMAKE_EXPORT_COMPILE_COMMANDS=ON`, which will create a file named `compile_commands.json` in the package's build folder. Once the build is complete, you can run clang-tidy to analyze your code and even fix problems automatically, as follows.
+Unlike **clang-format**, **clang-tidy** needs to know the exact compiler options used to build the project. To provide them, configure cmake with `-DCMAKE_EXPORT_COMPILE_COMMANDS=ON`, which will create a file named `compile_commands.json` in the package's build folder. Once the build is complete, you can run clang-tidy to analyze your code and even fix problems automatically, as follows.
 
 ```sh
 for file in $(find $CATKIN_WS/build -name compile_commands.json) ; do

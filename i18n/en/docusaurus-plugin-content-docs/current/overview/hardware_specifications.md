@@ -6,7 +6,7 @@ sidebar_position: 2
 ## Hardware Specifications
 ## CAN bus
 ### Built-in CAN 
-Both the Jetson AGX Xavier/NX/TX2 and the Mythbuster 2-G (TX2) have two build-in CAN bus interfaces. The diagram below **9** shows the physical interface locations for the built-in CAN of the Jetson 2.
+Both the Jetson AGX Xavier/NX/TX2 and the Manifo 2G-G (TX2) have two build-in CAN bus interfaces. The diagram below **9** shows the physical interface locations for the built-in CAN of the Jetson 2.
 
 ![manifold2](/img/hardware_specifications/manifold2.png) 
 
@@ -25,8 +25,8 @@ GPIO, PWM, I2C interfaces are under development, see [road map](TODO) for detail
 
 ## Module topology
 
-The following diagram shows the basic hardware topology block diagram of the entire vehicle (the engineering robot topology varies widely throughout the vehicle and is not given here).
+The following diagram shows the basic hardware topology block diagram of the entire robot (the engineering robot topology varies widely throughout the robot and is not given here).
 
 ![hardware_typology_schematic](/img/hardware_specifications/hardware_typology_schematic.png) 
 
-The basic hardware topology of the robot is composed of two major parts, the head and the chassis, which are separated by a conductive slip ring as a dividing line. The 12V, 19V, 5V and 3.3V voltage sets on the car are provided by LM25116, LM3150, SY8303 and RT9193 respectively.
+The basic hardware topology of the robot is composed of two major parts, the gimbal and the chassis, which are separated by a conductive slip ring as a dividing line. The 12V, 19V, 5V and 3.3V voltage sets on the car are provided by LM25116, LM3150, SY8303 and RT9193 respectively.
