@@ -207,10 +207,10 @@ git clone git@github.com:rm-controls/rm_control.git #SSH
   <summary>
     If you want to deploy to a robot or use a computing device on a robot for testing
   </summary>
-  <div
+  <div>
     Use scp or CLion to pass rm_msgs, rm_common, rm_hw to the computing device (mini PC) on the robot.
   </div>
-</details
+</details>
 
 :::caution
 You should not clone the repository directly to the robot computing device, and you should not pass the entire rm-controls metapackage to the robot. Because rm-controls contains emulation, it is necessary to install many emulation and graphics dependencies that the robot does not need.
