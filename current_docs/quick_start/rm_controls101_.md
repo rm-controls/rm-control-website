@@ -192,6 +192,7 @@ mkdir urdf launch config
 ### 配置并运行 rm_hw
 首先需要先安装 rm_hw 及其依赖，你可以选择从包安装或者从源码编译：
 #### 从包安装
+请先[添加源](https://rm-controls.github.io/quick_start/rm_source)
 
     sudo apt install ros-noetic-rm-hw
 

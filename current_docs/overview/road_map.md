@@ -7,7 +7,7 @@ sidebar_position: 4
 ## 文档
 ### README
 * [x] Why rm-controls?
-* [ ] rm-controls 101
+* [x] rm-controls 101
 * [ ] Gazebo 底盘
 * [ ] rm_engineer
 * [ ] rm_dbus
@@ -19,14 +19,14 @@ sidebar_position: 4
 * [ ] rm_gazebo
 * [ ] rm_chassis_controllers
 * [ ] rm_gimbal_controllers
-* [ ] rm_shooter_controllers
+* [x] rm_shooter_controllers
 
 ## IO
 本项目的较大缺点是 IO 数量种类太少，因此开发对应的转接模块和对应测试接口
 ### 模块转 CAN
 * [x] HI229 (测试中)
 * [x] ICM-20948 (测试中)
-* [ ] BIM-88
+* [x] BIM-088
 * [ ] GPIO
 
 ### 模块转 i2c 转 USB
