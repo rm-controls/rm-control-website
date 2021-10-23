@@ -1,59 +1,71 @@
-name: documentation
+name: deploy-docs
 
 on:
-  pull_request:
-    branches: [master]
   push:
-    branches: [master]
+    branches: [ master ]
+  pull_request_target:
+    branches: [ master ]
+    types: [opened, synchronize, reopened]
 
 jobs:
-  checks:
-    if: github.event_name != 'push'
+  docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+        if: github.event_name == 'push'
+
+      - uses: actions/checkout@v2
+        if: github.event_name != 'push'
         with:
-          node-version: '14.x'
-      - name: Test Build
-        run: |
-          if [ -e yarn.lock ]; then
-            yarn install --frozen-lockfile
-          elif [ -e package-lock.json ]; then
-            npm ci
-          else
-            npm i
-          fi
-          npm run build
-  gh-release:
-    if: github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache Packages
+        id: yarn-cache
+        uses: actions/cache@v2
         with:
-          node-version: '14.x'
-      - uses: webfactory/ssh-agent@v0.5.0
-        with:
-          ssh-private-key: ${{ secrets.GH_PAGES_DEPLOY }}
-      - name: Release to GitHub Pages
-        env:
-          USE_SSH: true
-          GIT_USER: git
-          DEPLOYMENT_BRANCH: gh-pages
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install and build
         run: |
           sudo apt install curl > /dev/null
           curl https://raw.githubusercontent.com/rm-controls/rm_controllers/master/rm_calibration_controllers/README.md > current_docs/digging_deeper/controllers/rm_calibration_controllers.md
           curl https://raw.githubusercontent.com/rm-controls/rm_controllers/master/rm_chassis_controllers/README.md > current_docs/digging_deeper/controllers/rm_chassis_controllers.md
           curl https://raw.githubusercontent.com/rm-controls/rm_controllers/master/rm_gimbal_controllers/README.md > current_docs/digging_deeper/controllers/rm_gimbal_controllers.md
           curl https://raw.githubusercontent.com/rm-controls/rm_controllers/master/rm_shooter_controllers/README.md > current_docs/digging_deeper/controllers/rm_shooter_controllers.md
-          git config --global user.email "muzhou233@outlook.com"
-          git config --global user.name "MuZhou233"
-          if [ -e yarn.lock ]; then
-            yarn install --frozen-lockfile
-          elif [ -e package-lock.json ]; then
-            npm ci
-          else
-            npm i
-          fi
-          npm run deploy
+          yarn install
+          yarn build
+
+      - name: Get Branch Name
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+
+      - name: Get Deploy Name
+        if: github.event_name == 'push'
+        run: |
+          echo "DEPLOY_NAME=${{ env.BRANCH_NAME }}" >> $GITHUB_ENV
+          echo "PRODUCTION=${{ env.BRANCH_NAME == 'master' }}" >> $GITHUB_ENV
+
+      - name: Get Deploy Name
+        if: github.event_name != 'push'
+        run: |
+          echo "DEPLOY_NAME=deploy-preview-${{ github.event.number }}" >> $GITHUB_ENV
+          echo "PRODUCTION=false" >> $GITHUB_ENV
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.1
+        with:
+          publish-dir: './build'
+          production-deploy: ${{ env.PRODUCTION }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: 'Deploy ${{ env.DEPLOY_NAME }}@${{ github.sha }}'
+          enable-commit-comment: false
+          alias: ${{ env.DEPLOY_NAME }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
