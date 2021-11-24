@@ -16,14 +16,14 @@ module.exports = {
   projectName: 'rm-controls.github.io',
   trailingSlash: false,
   i18n: {
-    defaultLocale: 'zh-cn',
-    locales: ['en', 'zh-cn'],
+    defaultLocale: 'zh-CN',
+    locales: ['en', 'zh-CN'],
     localeConfigs: {
       en: {
         label: 'English',
         direction: 'ltr',
       },
-      'zh-cn': {
+      'zh-CN': {
         label: '中文',
         direction: 'ltr',
       },
