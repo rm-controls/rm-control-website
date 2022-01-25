@@ -22,7 +22,7 @@ import TabItem from '@theme/TabItem';
 进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中拉取本 `rm_control`，并使用 `rosdep` 安装包的依赖，并编译。
 
 ```shell
-cd ~/ws_ws/src
+cd ~/rm_ws/src
 git clone https://github.com/rm-controls/rm_control.git
 rosdep install --from-paths . --ignore-src
 catkin build
@@ -58,7 +58,7 @@ values={[
 启动目标机器人的仿真
 
 ```shell
- mon launch rm_gazebo empty_world.launch load_gimbal:= false load_shooter:= false
+ mon launch rm_gazebo empty_world.launch load_gimbal:=false load_shooter:=false
 ```
 启动目标机器人仿真的同时禁止加载机器人的云台和发射机构（当云台机构未加载的时候，加载发射机构会产生报错）
 ，因为我们此次的目标是在仿真中控制底盘的运动。
