@@ -95,8 +95,20 @@ catkin build
 
 #### 加载底盘控制器
 ```
+ mon launch robot_state_controller load_controllers.launch
  mon launch rm_chassis_controllers load_controllers.launch
 ```
+
+#### 在rqt中的Controller manager中启动相关控制器
+```
+rqt
+```
+启动rqt后，依次选择`Plugins`,`Robot Tools`,`Controller manager`，以打开
+Controller manager。在namespace中选择/controller_manager 可以看到出现三个处于`initialized`
+状态的控制器。右键点击`robot_state_controller`，选择`start`，
+接着对`chassis_controller`进行相同的操作，观察到`robot_state_controller`和
+`chassis_controller`都处于`running`的状态。
+
 成功加载底盘控制器，可以开始尝试控制底盘运动。
 
 #### 设置底盘的各种参数
