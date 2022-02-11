@@ -30,6 +30,9 @@ $$
 k = \frac{-\sum \lvert \omega_{real}\tau_{cmd} \rvert + \sqrt{\sum(\omega_{real}\tau_{cmd})^2 - 4k_1(\sum\tau_{cmd}^2)(k_2\sum\omega_{real}^2-P_{max})}} {2k_1\sum\tau_{cmd}^2}
 $$
 最终给电机的力矩指令即为$\tau_{cmd}' = k\tau_{cmd}$。
+
+具体的代码实现请点[这里](https://github.com/rm-controls/rm_controllers/blob/e6774fee52cd831f169ba35a598111b62e54c149/rm_chassis_controllers/src/chassis_base.cpp#L334-L359)。
+
 下图展示了步兵机器人在 静止状态下进入高速小陀螺后再进入慢速小陀螺最后在高速小陀螺状态下进行平移的功率（最上）、速度指令（中间）和实际速度（最下）的曲线，可见在高速小陀螺状态下，功率被限制在了红线附近之下，实际速度比速度指令小，进入慢速小陀螺后，功率降低，此时实际速度与速度指令相等，最后在高速小陀螺状态下平移时，功率依然被限制在了青色线(最大功率)附近以下。
 ![软件底盘功率限制](/img/digging_deeper/software_power_limit.png)
 
