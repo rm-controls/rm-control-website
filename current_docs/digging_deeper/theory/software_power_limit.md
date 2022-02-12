@@ -21,15 +21,17 @@ $$
 
 ## 实现
 
-我们根据(2)式来实现功率限制。已知：最大功率 $P_{max}$、各电机当前转速 $\omega_{real}$ 和电机PID计算出来的原始力矩指令 $\tau_{cmd}$ 。当$\tau_{cmd}$将使$P_{in}$高于$P_{max}$时，设有一缩放系数k，令$\tau_{cmd}' = k\tau_{cmd}$,使得$\tau_{cmd}'$满足：
+我们根据(2)式来实现功率限制。已知：最大功率 $P_{max}$、各电机当前转速 $\omega_{real}$ 和电机PID计算出来的原始力矩指令 $\tau_{cmd}$ 。当 $\tau_{cmd}$ 将使 $P_{in}$ 高于 $P_{max}$ 时，设有一缩放系数 k，令 $\tau_{cmd}' = k\tau_{cmd}$, 使得 $\tau_{cmd}'$ 满足：
 $$
 P_{max} = \sum \lvert \omega_{real}\tau_{cmd'} \rvert + k_1\sum\tau_{cmd}'^2 + k_2\sum\omega_{real}'^2
 $$
-则可由上式计算出k的值：
+则可由上式计算出 k 的值：
 $$
 k = \frac{-\sum \lvert \omega_{real}\tau_{cmd} \rvert + \sqrt{\sum(\omega_{real}\tau_{cmd})^2 - 4k_1(\sum\tau_{cmd}^2)(k_2\sum\omega_{real}^2-P_{max})}} {2k_1\sum\tau_{cmd}^2}
 $$
-最终给电机的力矩指令即为$\tau_{cmd}' = k\tau_{cmd}$。
+最终给电机的力矩指令即为 $\tau_{cmd}' = k\tau_{cmd}$。
+
+$k_1$、$k_2$ 的调试方法：实时读取裁判系统反馈的底盘功率。先让底盘电机堵转，调整 $k_1$ 使底盘实际功率大致与限制功率相等。再让机器人原地小陀螺，调整 $k_2$使底盘实际功率大致与限制功率相等。
 
 具体的代码实现请点[这里](https://github.com/rm-controls/rm_controllers/blob/e6774fee52cd831f169ba35a598111b62e54c149/rm_chassis_controllers/src/chassis_base.cpp#L334-L359)。
 
