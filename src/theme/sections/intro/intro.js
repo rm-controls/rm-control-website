@@ -3,6 +3,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import Container from "./../../components/container/container";
 import Button from "./../../components/button/button";
+import Translate from "@docusaurus/Translate";
 
 export default function Intro() {
   const context = useDocusaurusContext();
@@ -13,10 +14,11 @@ export default function Intro() {
   return (
     <div className={component}>
       <Container componentClass={component} size={"medium"}>
-        <div
-          className={`${component}__title`}
-          dangerouslySetInnerHTML={{ __html: "rm-controls<br/>电控方案" }}
-        />
+        <div className={`${component}__title`}>
+          rm-controls
+          <br />
+          <Translate id="homepage.intro1">{"电控方案"}</Translate>
+        </div>
         <div className={`${component}__image`}>
           <img
             className={`${component}__image-bg`}
@@ -29,9 +31,11 @@ export default function Intro() {
         </div>
         <div className={`${component}__content`}>
           {siteConfig.tagline}
-          一套在 PC 上运行的无下位机、视控一体软件和配套硬件，基于 ros-controls
-          的硬件和仿真接口以及配套的控制器，用于开发 RoboMaster
-          机器人和高性能机器人。
+          <Translate id="homepage.intro">
+            {
+              "一套在 PC 上运行的无下位机、视控一体软件和配套硬件，基于 ros-controls 的硬件和仿真接口以及配套的控制器，用于开发 RoboMaster 机器人和高性能机器人。"
+            }
+          </Translate>
         </div>
         <Button
           componentClass={component}
