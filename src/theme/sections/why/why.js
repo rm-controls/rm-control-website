@@ -11,11 +11,13 @@ export default function Why() {
     <div className={component}>
       <Container componentClass={component} size={"medium"}>
         <BrowserOnly>
-          {window.location.href.indexOf("en/") != -1 ? (
-            <EnWhyContext />
-          ) : (
-            <WhyContext />
-          )}
+          {() =>
+            window.location.href.indexOf("en/") != -1 ? (
+              <EnWhyContext />
+            ) : (
+              <WhyContext />
+            )
+          }
         </BrowserOnly>
       </Container>
     </div>
