@@ -1,15 +1,15 @@
-import React from 'react';
-import useBaseUrl from '@docusaurus/useBaseUrl';
+import React from "react";
+import useBaseUrl from "@docusaurus/useBaseUrl";
 
 export default function Arrow(props) {
+  const component = "shift-arrow";
 
-  const component = 'shift-arrow';
-
-  const {
-    componentClass,
-  } = props;
+  const { componentClass } = props;
 
   return (
-    <img className={` ${component} ${componentClass}__${component}`} src={useBaseUrl('img/ic-arrow.svg')} />
+    <img
+      className={` ${component} ${componentClass}__${component}`}
+      src={useBaseUrl("img/ic-arrow.svg")}
+    />
   );
 }

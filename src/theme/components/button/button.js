@@ -1,16 +1,15 @@
-import React from 'react';
-import Link from '@docusaurus/Link';
+import React from "react";
+import Link from "@docusaurus/Link";
 
 export default function Button(props) {
-
-  const component = 'shift-button';
+  const component = "shift-button";
 
   const {
     componentClass,
     label,
     href,
-    size='default',
-    color='default',
+    size = "default",
+    color = "default",
   } = props;
 
   return (
@@ -21,7 +20,8 @@ export default function Button(props) {
         ${component}__color--${color}
         ${componentClass}__${component}
       `}
-      to={href}>
+      to={href}
+    >
       {label}
     </Link>
   );

@@ -1,27 +1,24 @@
 import { Fragment } from "react";
-import React from 'react';
+import React from "react";
 
 export default function Container(props) {
+  const component = "shift-container";
 
-  const component = 'shift-container';
-
-  const {
-    componentClass,
-    size='default',
-    children,
-  } = props;
+  const { componentClass, size = "default", children } = props;
 
   return (
     <Fragment>
-      {children &&
-        <div className={`
+      {children && (
+        <div
+          className={`
           ${component}
           ${component}__size--${size}
           ${componentClass}__${component}
-        `}>
-         {children}
+        `}
+        >
+          {children}
         </div>
-      }
+      )}
     </Fragment>
   );
 }

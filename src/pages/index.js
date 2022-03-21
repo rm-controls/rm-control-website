@@ -1,14 +1,14 @@
-import React from 'react';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import useBaseUrl from '@docusaurus/useBaseUrl';
-import Layout from '@theme/Layout';
-import Intro from '../theme/sections/intro/intro';
-import Why from '../theme/sections/why/why';
-import GetStarted from '../theme/sections/get-started/get-started';
+import React from "react";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import useBaseUrl from "@docusaurus/useBaseUrl";
+import Layout from "@theme/Layout";
+import Intro from "../theme/sections/intro/intro";
+import Why from "../theme/sections/why/why";
+import GetStarted from "../theme/sections/get-started/get-started";
 
 export default function Home() {
   const context = useDocusaurusContext();
-  const {siteConfig = {}} = context;
+  const { siteConfig = {} } = context;
 
   return (
     <Layout
