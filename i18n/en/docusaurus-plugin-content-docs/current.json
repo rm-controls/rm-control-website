@@ -4,23 +4,23 @@
     "description": "The label for version current"
   },
   "sidebar.tutorialSidebar.category.overview": {
-    "message": "overview",
+    "message": "Overview",
     "description": "The label for category overview in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.jump-start": {
-    "message": "jump-start",
+    "message": "Jump Start",
     "description": "The label for category jump-start in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.dev-guide": {
-    "message": "dev-guide",
+    "message": "Dev Guide",
     "description": "The label for category dev-guide in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.advanced": {
-    "message": "advanced",
+    "message": "Advanced",
     "description": "The label for category advanced in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.theory": {
-    "message": "theory",
+    "message": "Theorem",
     "description": "The label for category theory in sidebar tutorialSidebar"
   }
 }
