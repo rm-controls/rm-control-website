@@ -2,7 +2,7 @@
 
 ## Software Dependency Configuration
 
-ROS melody is installed by default. Refer to the [Installation  Guide](http://wiki.ros.org/melodic/Installation) to install ROS
+ROS melody is installed by default. Refer to the [Installation Guide](http://wiki.ros.org/melodic/Installation) to install ROS
 
 After installing ROS, install the required dependency packages
 
@@ -11,28 +11,27 @@ After installing ROS, install the required dependency packages
 
 ## Pull and compile from Git
 
-+ Code of clone warehouse from GitHub
+- Code of clone warehouse from GitHub
 
-  ```git clone https://github.com/QiayuanLiao/RM-Software.git```
+  `git clone https://github.com/QiayuanLiao/RM-Software.git`
 
 > [!Tip]
 >
-> The warehouse contains a catkin_ Workspace, which needs to be added in '. Bashrc'.
+> The warehouse contains a catkin\_ Workspace, which needs to be added in '. Bashrc'.
 
-+ Initialization submodule
+- Initialization submodule
 
-  ```git submodule update --init --recursive ```
+  `git submodule update --init --recursive `
 
 > [!Note]
 >
 > Camera driver and visual algorithm are managed in the form of submodule.
 
-
 Common problem：
 
-During initialization，If there is a problem```Unable to read remote warehouse. Please confirm that you have the correct access rights and that the warehouse exists```，Please refer to [the solution](https://blog.csdn.net/qq_36770641/article/details/88638573) 
+During initialization，If there is a problem`Unable to read remote warehouse. Please confirm that you have the correct access rights and that the warehouse exists`，Please refer to [the solution](https://blog.csdn.net/qq_36770641/article/details/88638573)
 
-+ Compile
+- Compile
 
   ```
   cd RM-Software/rm_ws/

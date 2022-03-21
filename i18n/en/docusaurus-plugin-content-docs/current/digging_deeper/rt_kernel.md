@@ -13,7 +13,8 @@ The [RT-Preempt](https://rt.wiki.kernel.org/index.php/Main_Page) is based on the
 
 ``bash
 mkdir ~/rt-kernel && cd ~/rt-kernel
-```
+
+````
 
 :::tip
 Use extranet access, or use mobile hotspot access if no extranet is available.
@@ -36,7 +37,7 @@ Kernel version and patch version need to strictly correspond
  gunzip patch-5.6.19-rt12.patch.gz #Unzip the patch
  cd linux-5.6.19/
  patch -p1 < ... /patch-5.6.19-rt12.patch #patch
-```
+````
 
 :::info
 The kernel used in this article is `linux-5.6.19.tar.gz` and the rt patch is `patch-5.6.19-rt12.patch.gz`.
@@ -111,17 +112,21 @@ linux-headers-5.6.19-rt12_5.6.19-rt12-1_amd64.deb
 linux-image-5.6.19-rt12_5.6.19-rt12-1_amd64.deb
 linux-libc-dev_5.6.19-rt12-1_amd64.deb
 ```
+
 ## Installing the kernel
+
 :::tip
 At this point, you can copy the .deb package from a USB stick to another device and install it without having to compile it again
 :::
 
 Go to the package folder and install the kernel
+
 ```bash
 sudo dpkg -i linux-*.deb
 ```
 
 2. Update grub and reboot
+
 ```bash
 sudo update-grub
 sudo reboot
@@ -133,39 +138,42 @@ sudo reboot
 uname -a
 ```
 
-At this point, you can see that the kernel version is marked with `` PREEMPT RT`` and you can perform [real-time testing](digging_deeper/rt_test.md)
+At this point, you can see that the kernel version is marked with ` PREEMPT RT` and you can perform [real-time testing](digging_deeper/rt_test.md)
 
 ## Error collection
 
 1. Unable to open kernel configuration interface menuconfig
 
-    Q1:(linux-4.17.2 kernel for example)
-    ```bash
-    root@simon-virtual-machine:/home/simon/Src/linux-4.17.2# make menuconfig
-    YACC scripts/kconfig/zconf.tab.c
-    /bin/sh: 1: bison: not found
-    scripts/Makefile.lib:196: recipe for target 'scripts/kconfig/zconf.tab.c' failed
-    make[1]: *** [scripts/kconfig/zconf.tab.c] Error 127
-    Makefile:528: recipe for target 'menuconfig' failed
-    make: *** [menuconfig] Error 2
-    ```
-    A1.
-    ```bash
-    apt-get install bison -y
-    ```
-    Q2.
-    ``bash
-    root@simon-virtual-machine:/home/simon/Src/linux-4.17.2# make menuconfig
-    YACC scripts/kconfig/zconf.tab.c
-    LEX scripts/kconfig/zconf.lex.c
-    /bin/sh: 1: flex: not found
-    scripts/Makefile.lib:188: recipe for target 'scripts/kconfig/zconf.lex.c' failed
-    make[1]: *** [scripts/kconfig/zconf.lex.c] Error 127
-    Makefile:528: recipe for target
-    ```
-    A2.
-    ```bash
-    sudo apt-get install flex
-    ```
+   Q1:(linux-4.17.2 kernel for example)
 
+   ```bash
+   root@simon-virtual-machine:/home/simon/Src/linux-4.17.2# make menuconfig
+   YACC scripts/kconfig/zconf.tab.c
+   /bin/sh: 1: bison: not found
+   scripts/Makefile.lib:196: recipe for target 'scripts/kconfig/zconf.tab.c' failed
+   make[1]: *** [scripts/kconfig/zconf.tab.c] Error 127
+   Makefile:528: recipe for target 'menuconfig' failed
+   make: *** [menuconfig] Error 2
+   ```
 
+   A1.
+
+   ```bash
+   apt-get install bison -y
+   ```
+
+   Q2.
+   ``bash
+   root@simon-virtual-machine:/home/simon/Src/linux-4.17.2# make menuconfig
+   YACC scripts/kconfig/zconf.tab.c
+   LEX scripts/kconfig/zconf.lex.c
+   /bin/sh: 1: flex: not found
+   scripts/Makefile.lib:188: recipe for target 'scripts/kconfig/zconf.lex.c' failed
+   make[1]: \*\*\* [scripts/kconfig/zconf.lex.c] Error 127
+   Makefile:528: recipe for target
+
+   ````
+   A2.
+   ```bash
+   sudo apt-get install flex
+   ````

@@ -5,43 +5,44 @@ sidebar_position: 1
 
 # 代码规范
 
-我们使用在C++开发中使用 [ROS C++ Style guide](http://wiki.ros.org/CppStyleGuide) ，在Python开发中（很少）使用 [ROS Python Style guide](http://wiki.ros.org/PyStyleGuide) , 你还可以将 [ros_best_pracitces](https://github.com/leggedrobotics/ros_best_practices) 作为模版参考.
+我们使用在 C++开发中使用 [ROS C++ Style guide](http://wiki.ros.org/CppStyleGuide) ，在 Python 开发中（很少）使用 [ROS Python Style guide](http://wiki.ros.org/PyStyleGuide) , 你还可以将 [ros_best_pracitces](https://github.com/leggedrobotics/ros_best_practices) 作为模版参考.
 
-为了让你的开发更方便, 我们推荐你使用 带有ROS配置的 ``clang-format`` 和 CLion IDE - 详见下方.
+为了让你的开发更方便, 我们推荐你使用 带有 ROS 配置的 `clang-format` 和 CLion IDE - 详见下方.
 
 此外 rm-controls 有一些额外的样式偏好：
 
 ## C++
 
- - 我们使用 C++14
- - 尽可能使用 C++ 标准库 (``std::``) 
- - 避免使用 C 风格的函数，比如： ``FLT_EPSILON`` 和 ``(int)()``-  而是使用 ``std::numeric_limits<double>::epsilon()`` 和 ``static_cast<int>()``
- - 当功能在标准库中不可用时，鼓励使用 Boost 库
- - 在标题中使用 ``#pragma once`` 而不是 "include guards"
+- 我们使用 C++14
+- 尽可能使用 C++ 标准库 (`std::`)
+- 避免使用 C 风格的函数，比如： `FLT_EPSILON` 和 `(int)()`- 而是使用 `std::numeric_limits<double>::epsilon()` 和 `static_cast<int>()`
+- 当功能在标准库中不可用时，鼓励使用 Boost 库
+- 在标题中使用 `#pragma once` 而不是 "include guards"
 
 ## 代码内文档
 
- - 我们使用 Doxygen 风格的注释
- - 对于未来的工作，使用 ``TODO(username): description``
- - 添加大量注释以解释复杂的代码部分
- - 更偏向使用完整的、描述性的变量名称而不是简短的字母 - 例如 ``robot_state_`` 优于 ``rs_``
- - 如果变量类型不能从上下文中立即变得清晰（例如从 ``make_shared<...>``），避免使用 ``auto``
+- 我们使用 Doxygen 风格的注释
+- 对于未来的工作，使用 `TODO(username): description`
+- 添加大量注释以解释复杂的代码部分
+- 更偏向使用完整的、描述性的变量名称而不是简短的字母 - 例如 `robot_state_` 优于 `rs_`
+- 如果变量类型不能从上下文中立即变得清晰（例如从 `make_shared<...>`），避免使用 `auto`
 
 ## Exceptions
- - 捕获已知异常并详细记录它们。 避免使用 ``catch (...)`` 因为它隐藏了有关可能故障的信息。 我们想知道是否有问题。
+
+- 捕获已知异常并详细记录它们。 避免使用 `catch (...)` 因为它隐藏了有关可能故障的信息。 我们想知道是否有问题。
 
 ## Logging
 
- - 使用ROS logging功能和命名空间，如： ``ROS_INFO_NAMED(LOGNAME, "Starting listener...``.
-   - 这使得在命令行上更容易理解输出来自哪里，并允许对终端输出的信息进行更详细的筛选。
-   - 日志命名空间应该被定义为一个 ``const`` 变量。 （例如：``constexpr char LOGNAME[] = "robot_state";``)
-   - 使用文件名作为 LOGNAMED 命名空间是最佳的，即 ``hardware_interface.cpp`` 将使用 ``"hardware_interface"``
-   - 避免使用包名称作为命名空间，因为它已经会被 logger 输出。
+- 使用 ROS logging 功能和命名空间，如： `ROS_INFO_NAMED(LOGNAME, "Starting listener...`.
+  - 这使得在命令行上更容易理解输出来自哪里，并允许对终端输出的信息进行更详细的筛选。
+  - 日志命名空间应该被定义为一个 `const` 变量。 （例如：`constexpr char LOGNAME[] = "robot_state";`)
+  - 使用文件名作为 LOGNAMED 命名空间是最佳的，即 `hardware_interface.cpp` 将使用 `"hardware_interface"`
+  - 避免使用包名称作为命名空间，因为它已经会被 logger 输出。
 
 ## 弃用
 
- - 弃用函数使用 C++14 [ ``[[deprecated]]`` ](https://en.cppreference.com/w/cpp/language/attributes/deprecated) 属性
- - 添加一条有用的消息来描述如何处理这种情况：
+- 弃用函数使用 C++14 [ `[[deprecated]]` ](https://en.cppreference.com/w/cpp/language/attributes/deprecated) 属性
+- 添加一条有用的消息来描述如何处理这种情况：
 
 ```cpp
 [[deprecated("use bar instead")]] void foo() {}
@@ -51,13 +52,12 @@ sidebar_position: 1
 
       warning: 'foo' is deprecated: use bar instead [-Wdeprecated-declarations] foo(); ^ note: 'foo' has been explicitly marked deprecated here void foo() {} ^
 
- - 添加相关的 TODO，描述何时删除该功能（日期和/或 ROS 版本）
-
+- 添加相关的 TODO，描述何时删除该功能（日期和/或 ROS 版本）
 
 ## pre-commit 格式检查器
 
 在我们的许多存储库中，有一个在 CI 中运行的 [pre-commit](https://pre-commit.com/) 检查。
-你可以在本地使用它并将其设置为在提交之前自动运行，从而避免因为格式错误而无法通过CI。
+你可以在本地使用它并将其设置为在提交之前自动运行，从而避免因为格式错误而无法通过 CI。
 要安装，请使用 pip：
 
     pip3 install pre-commit
@@ -128,7 +128,9 @@ for file in $(find $CATKIN_WS/build -name compile_commands.json) ; do
 	run-clang-tidy -fix -header-filter="$CATKIN_WS/.*" -p $(dirname $file)
 done
 ```
+
 您还可以通过指定正则表达式来匹配文件名，在选定的文件夹或包文件上运行它：
+
 ```sh
 run-clang-tidy -fix -header-filter="$CATKIN_WS/.*" -p $CATKIN_WS/build/rm_hw rm_hw
 ```
@@ -138,6 +140,7 @@ run-clang-tidy -fix -header-filter="$CATKIN_WS/.*" -p $CATKIN_WS/build/rm_hw rm_
 
 如果您只对警告感兴趣，clang-tidy 也可以在构建期间直接运行。
 您可以使用以下命令进行特定的 clang-tidy 构建：
+
 ```
 catkin config --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_CXX_CLANG_TIDY=clang-tidy
 catkin build
@@ -149,9 +152,9 @@ catkin build
 
 :::
 
-### clang-tidy的例外
+### clang-tidy 的例外
 
-可以通过使用 **NOLINT** 或 **NOLINTNEXTLINE** 注释来抑制不需要的 clang-tidy 检查。 请在注释后的括号中明确指定check的名称：
+可以通过使用 **NOLINT** 或 **NOLINTNEXTLINE** 注释来抑制不需要的 clang-tidy 检查。 请在注释后的括号中明确指定 check 的名称：
 
 ```cpp
 const IKCallbackFn solution_callback = 0; // NOLINT(modernize-use-nullptr)
@@ -170,4 +173,5 @@ for (const int & item : container)
 ```
 
 ## Credits
+
 这个文件翻译修改自 [MoveIt Code Style Guidelines](https://moveit.ros.org/documentation/contributing/code/).

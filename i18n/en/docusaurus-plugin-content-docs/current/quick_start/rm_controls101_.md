@@ -11,23 +11,24 @@ Installing from a package may not work. This article is not yet complete.
 
 This article will take you through building a simple single-joint URDF and loading it into Gazebo, and then loading two simple PID controllers to control its position and speed, respectively.
 Environment and dependencies.
-* Ubuntu
-* ROS
-* [catkin tools](https://catkin-tools.readthedocs.io/en/latest/)
-* [rosmon](http://wiki.ros.org/rosmon)
 
+- Ubuntu
+- ROS
+- [catkin tools](https://catkin-tools.readthedocs.io/en/latest/)
+- [rosmon](http://wiki.ros.org/rosmon)
 
 There is a detailed official installation tutorial for all of the above environments and dependencies, so I won't go into it here.
 
 :::info
-Our daily development is usually done on Ubuntu 20.04 (ros-noetic), and usually the CI also makes sure that the program is running correctly on Ubuntu 18.04 (ros-melodic). Bugs may occur on older versions of Mythic2 than Ubuntu 16.04 (ros-kinetic), feel free to report them to [rm_control Issue Tracker](https://github.com/rm-controls/rm_control/issues) and [rm_ controlles Issue Tracker](https://github.com/rm-controls/rm_controllers/issues).
+Our daily development is usually done on Ubuntu 20.04 (ros-noetic), and usually the CI also makes sure that the program is running correctly on Ubuntu 18.04 (ros-melodic). Bugs may occur on older versions of Mythic2 than Ubuntu 16.04 (ros-kinetic), feel free to report them to [rm_control Issue Tracker](https://github.com/rm-controls/rm_control/issues) and [rm\_ controlles Issue Tracker](https://github.com/rm-controls/rm_controllers/issues).
 :::
 
 :::caution
-It is strongly recommended to use [catkin tools](https://catkin-tools.readthedocs.io/en/latest/) instead of [catkin_make](http://wiki.ros.org/catkin/commands/catkin_make ) Use [mon](http://wiki.ros.org/rosmon) instead of [roslaunch](http://wiki.ros.org/roslaunch), and use the catkin_tools and rosmon commands for the rest of the tutorial.
+It is strongly recommended to use [catkin tools](https://catkin-tools.readthedocs.io/en/latest/) instead of [catkin_make](http://wiki.ros.org/catkin/commands/catkin_make) Use [mon](http://wiki.ros.org/rosmon) instead of [roslaunch](http://wiki.ros.org/roslaunch), and use the catkin_tools and rosmon commands for the rest of the tutorial.
 :::
 
 ### Create the package where the tutorial files will be placed
+
 Go to your workspace (assuming it is named `rm_ws`) and create the package in your workspace that will hold the tutorials `rm_controls_tutorials`
 
 ```shell
@@ -42,6 +43,7 @@ mkdir urdf launch config
 ```
 
 ## Run simulation
+
 If you are only running a simple simulation of a single 3508 driven joint, you don't need the code for rm-controls, so you can say that this section is actually an introduction to ros-controls + gazebo.
 
 :::caution
@@ -54,7 +56,8 @@ Install the dependencies:
 
 ### Create URDF and run the simulation
 
-Create the file ``urdf/rmrobot.urdf.xacro`` in your favorite text editor as follows.
+Create the file `urdf/rmrobot.urdf.xacro` in your favorite text editor as follows.
+
 ```xml
 <?xml version="1.0"? >
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="rmrobot">
@@ -145,6 +148,7 @@ Create the file ``urdf/rmrobot.urdf.xacro`` in your favorite text editor as foll
     </gazebo>
 </robot>
 ```
+
 The above code creates a simple duplex with `link1` fixed and `link2` connected with `joint1`, each link has its properties of collision, appearance and inertia.
 
 Create the launch file `launch/load_gazebo.launch` with your favorite editor as follows:
@@ -162,7 +166,7 @@ Create the launch file `launch/load_gazebo.launch` with your favorite editor as 
 ```
 
 The above launch file starts Gazebo, loads the URDF into the parameter server, and then informs Gazebo to load the URDF into the simulation world. Run the launch file
-    
+
     mon launch rm_controls_tutorials load_gazebo.launch
 
 The simulation will start and you can see the two links, when a certain force is applied to link2, link2 will oscillate and slowly stop.
@@ -174,6 +178,7 @@ Now you can try to control joint1 in the simulation : [run controller](#run cont
 ## Run the physical
 
 ### Preparing the CAN device
+
 Install the SocketCAN command line debugging tool on Linux.
 
     sudo apt install can-utils
@@ -181,7 +186,7 @@ Install the SocketCAN command line debugging tool on Linux.
 Set the CAN ID of the 3508 to `0x201` and connect it to can0 (note the high and low wire sequences), if you are testing on an Intel NUC or your laptop, you can use [rm_usb2can](https://github.com/rm-controls/rm_usb2can) to get the CAN interface. Run the following code.
 
 ```shell
-    sudo ip link set can0 up type can bitrate 1000000 
+    sudo ip link set can0 up type can bitrate 1000000
     candump can0
 ```
 
@@ -190,13 +195,16 @@ You can see the received CAN frame of 3508:
 ![candump](/img/rm-controls101/candump.png)
 
 ### Configuring and running rm_hw
+
 First you need to install rm_hw and its dependencies, you can choose to install from package or compile from source:
+
 #### Install from package
 
     sudo apt install ros-noetic-rm-hw
 
 #### Compile from source
-First clone the ``rm-controls`` repository in your PC: ```shell
+
+First clone the `rm-controls` repository in your PC: ```shell
 
 ```shell
 git clone git@github.com:rm-controls/rm_control.git #SSH
@@ -220,25 +228,28 @@ Install the dependencies using `rosdep` and compile.
 
     rosdep install --from-paths . --ignore-src
     catkin build
+
 :::tip
 Make sure your `rosdep` is properly installed and initialized.
 :::
 
-Create the underlying configuration file ``config/rm_hw.yaml`` with your favorite editor as follows.
+Create the underlying configuration file `config/rm_hw.yaml` with your favorite editor as follows.
 
 ``yaml
 bus:
-  - can0
-loop_frequency: 1000
-cycle_time_error_threshold: 0.001
+
+- can0
+  loop_frequency: 1000
+  cycle_time_error_threshold: 0.001
 
 actuators:
-  joint1_motor:
-    bus: can0
-    id: 0x201
-    type: rm_3508
-    lp_cutoff_frequency: 60
-```
+joint1_motor:
+bus: can0
+id: 0x201
+type: rm_3508
+lp_cutoff_frequency: 60
+
+````
 
 Create the launch file ``launch/load_rm_hw.yaml`` with your favorite editor as follows
 
@@ -252,16 +263,18 @@ Create the launch file ``launch/load_rm_hw.yaml`` with your favorite editor as f
     <node name="rm_hw" pkg="rm_hw" type="rm_hw" respawn="false" clear_params="true"/>
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 </launch>
-```
+````
 
 Run rm_hw:
 
     mon launch rm_controls_tutorials load_rm_hw.launch
 
 If there is an error.
+
 > [main]: Set scheduler failed, RUN THIS NODE AS SUPER USER.
 
 Then you need to set [`sudo` password free](https://www.cyberciti.biz/faq/linux-unix-running-sudo-command-without-a-password/). If you encounter a warning like.
+
 > [RmRobotHWLoop::update]: Cycle time exceeded error threshold by: 0.0017126s, cycle time: 0.003712596s, threshold: 0.001s
 
 For real-time issues, you need to replace the real-time kernel. For Intel NUC we recommend using [`linux-xanmod-rt`](https://xanmod.org/) kernel, for Jetson series or Manifo 2G, you can refer to [compiling real-time kernel](digging_deeper/rt_kernel.md) for more information. steps.
@@ -269,7 +282,8 @@ For real-time issues, you need to replace the real-time kernel. For Intel NUC we
 ###
 
 ## Running the controller
-Create the controller configuration file ``config/controllers.yaml`` with your favorite editor as follows.
+
+Create the controller configuration file `config/controllers.yaml` with your favorite editor as follows.
 
 ```yaml
 controllers:
@@ -279,7 +293,15 @@ controllers:
   joint1_position_controller:
     type: effort_controllers/JointPositionController
     joint: joint1
-    pid: { p: 30, i: 0.0, d: 0.8, i_clamp_max: 1, i_clamp_min: -1, antiwindup: true }
+    pid:
+      {
+        p: 30,
+        i: 0.0,
+        d: 0.8,
+        i_clamp_max: 1,
+        i_clamp_min: -1,
+        antiwindup: true,
+      }
   joint1_velocity_controller:
     type: effort_controllers/JointVelocityController
     joint: joint1
@@ -303,25 +325,29 @@ Use your favorite editor to create launch file `urdf/load_controller.launch` as 
 "/>
 </launch>
 ```
+
 When Gazebo or rm_hw is running, the controllers are loaded with the following command
 
     mon launch rm_controls_tutorials load_controllers.launch
 
 ### State fetching
+
 Use rostopic to get the state of the actuator (3508 motor) and rotate the rotor of the 3508 to observe the data.
 
     rostopic echo /actuator_states
 
-![](/img/rm-controls101/actuator_states.png) 
+![](/img/rm-controls101/actuator_states.png)
 
-Use the following command to turn on ``joint_state_controller``, which will post the joint states.
+Use the following command to turn on `joint_state_controller`, which will post the joint states.
+
 ```shell
 rosservice call /controller_manager/switch_controller "start_controllers: ['controllers/joint_state_controller']
 stop_controllers: ['']
 strictness: 1
 start_asap: true
-timeout: 0.0" 
+timeout: 0.0"
 ```
+
 Use rostopic to get the state of `joint1` and rotate the output axis of 3508 to see the data.
 
     rostopic echo /joint_states
@@ -333,6 +359,7 @@ Next the joints/actuators will move, if you are trying to use the real 3508 moto
 :::
 
 ### Position controller
+
 Stop running the speed controller and run the command for the position controller as follows.
 
 ```shell
@@ -340,7 +367,7 @@ rosservice call /controller_manager/switch_controller "start_controllers: ['cont
 stop_controllers: ['controllers/joint1_velocity_controller']
 strictness: 1
 start_asap: true
-timeout: 0.0" 
+timeout: 0.0"
 ```
 
 At this point, the closed-loop position is already in progress, and by sending the position command `0.0` through the rostopic, you can observe that the link2 moves rapidly to the horizontal position in the simulation or the real motor moves to the zero point. Change the value of the command sent to observe the phenomenon. At this point it is easy to visualize the individual data
@@ -352,6 +379,7 @@ In ROS, all data is in international standard units, e.g., rad for angle and rad
 :::
 
 ### Speed controller
+
 The command to stop running the position controller and run the speed controller is as follows.
 
 ```shell
@@ -359,7 +387,7 @@ rosservice call /controller_manager/switch_controller "start_controllers: ['cont
 stop_controllers: ['controllers/joint1_position_controller']
 strictness: 1
 start_asap: true
-timeout: 0.0" 
+timeout: 0.0"
 ```
 
 By sending the position command `3.1415` from rostopic, you can observe the link2 in the simulation or the real motor rotating at half a revolution per second.
@@ -367,5 +395,7 @@ By sending the position command `3.1415` from rostopic, you can observe the link
     rostopic pub /controllers/joint1_velocity_controller/command std_msgs/Float64 "data: 3.1415"
 
 ## TODO Visualization
+
 ROS provides a lot of visualization tools, you can plot the image of each data of the motor, view the relationship of each coordinate system, and dynamically adjust the PID parameters.
+
 ### rqt_multiplot data plotting

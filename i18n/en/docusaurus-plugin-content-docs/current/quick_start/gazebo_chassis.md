@@ -7,19 +7,21 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Gazebo Chassis
+
 :::danger
 Installing from a package may not work. This article is not yet complete.
 :::
 This article will take you through the manipulation of the mecanum wheels robot and the swerve drive robot chassis in the Gazebo simulation.
 
 ## Running the simulation
+
 ### Installing from the package
 
     sudo apt install ros-noetic-rm-rm_gazebo ros-noetic-rm-description
 
 ### Compile from source
 
-Go to your workspace (assuming it is named ``rm_ws``), pull this ``rm_control`` in your workspace and install the package dependencies using ``rosdep`` and compile.
+Go to your workspace (assuming it is named `rm_ws`), pull this `rm_control` in your workspace and install the package dependencies using `rosdep` and compile.
 
 ```shell
 cd ~/ws_ws/src
@@ -36,7 +38,6 @@ You must make sure that your `rosdep` installation and initialization is correct
 You **should** perform the following actions in your daily development computer; and **not** install simulation and visualization-related packages on top of the computing device on the robot, let alone run simulations on it.
 :::
 
-
 Set the environment variable `ROBOT_TYPE` to the target robot :
 <Tabs
 groupId="operating-systems"
@@ -50,11 +51,9 @@ values={[
 <TabItem value="舵轮">export ROBOT_TYPE=standard4</TabItem>
 </Tabs>
 
-
 ![](/img/gazebo_chassis/chassis1.png)
 
 ![](/img/gazebo_chassis/chassis2.png)
-
 
 Start the simulation of the target robot
 
@@ -82,7 +81,7 @@ values={[
 
 ### Controlling the chassis with the command line
 
-Go to your workspace (assuming it is named ``rm_ws``), pull the simulation package ``rm_chassis_controllers`` that you will use for this tutorial in your workspace, and install the package dependencies using ``rosdep``.
+Go to your workspace (assuming it is named `rm_ws`), pull the simulation package `rm_chassis_controllers` that you will use for this tutorial in your workspace, and install the package dependencies using `rosdep`.
 
 ```shell
 cd ~/ws_ws/src
@@ -94,7 +93,7 @@ catkin build
 Load and start the chassis controller.
 
 ```
- mon launch rm_chassis_controllers load_controllers.launch 
+ mon launch rm_chassis_controllers load_controllers.launch
 ```
 
 Set the serial number of mode to set the chassis mode where:
@@ -107,18 +106,16 @@ Set the serial number of mode to set the chassis mode where:
 
 4. 3 represents TWIST mode, it is twist mode, the rotation of the chassis will not be affected by the direction of the gimbal.
 
-
 Set accel(acceleration), set the linear and angular acceleration of the chassis and set the limit power of the chassis in power_limit.
 
-
-```shell
+````shell
 rostopic pub /controllers/chassis_controller/command rm_msgs/ChassisCmd "mode: 0
 accel:
   linear: {x: 0.0, y: 0.0, z: 0.0}
   angular: {x: 0.0, y: 0.0, z: 0.0}
 power_limit: 0.0
 follow_source_frame: ''
-stamp: {secs: 0, nsecs: 0}" 
+stamp: {secs: 0, nsecs: 0}"
 ``''
 
 The command to set the speed of the chassis to move is as follows.
@@ -131,5 +128,5 @@ rostopic pub /cmd_vel geometry_msgs/Twist "linear:
 angular:
   x: 0.0
   y: 0.0
-  z: 0.0" 
-```
+  z: 0.0"
+````

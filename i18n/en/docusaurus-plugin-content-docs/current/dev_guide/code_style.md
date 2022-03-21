@@ -3,49 +3,49 @@ id: code_style
 sidebar_position: 1
 ---
 
-
 # MoveIt Code Style Guidelines
 
 We use the [ROS C++ Style guide](http://wiki.ros.org/CppStyleGuide) for C++ development and (rarely) the [ROS Python Style guide](http://wiki.ros.org/) for Python.
 
-To make your development easier, we recommend using ``clang-format`` with ROS configuration and the CLion IDE - to see below for details.
+To make your development easier, we recommend using `clang-format` with ROS configuration and the CLion IDE - to see below for details.
 
 In addition rm-controls has some additional style preferences.
 
 ## C++
 
- - We use C++14
- - Use the C++ standard library (``std::``) whenever possible 
- - Avoid using C-style functions such as ``FLT_EPSILON`` and ``(int)()`` - instead use ``std::numeric_limits<double>::epsilon()`` and ``static_cast<int>()``
- - When functions are not available in the standard library, use of the Boost library is encouraged
- - Boost is an encouraged library when functionality is not available in the standard library
- - Use ``#pragma once`` in the title instead of "include guards"
+- We use C++14
+- Use the C++ standard library (`std::`) whenever possible
+- Avoid using C-style functions such as `FLT_EPSILON` and `(int)()` - instead use `std::numeric_limits<double>::epsilon()` and `static_cast<int>()`
+- When functions are not available in the standard library, use of the Boost library is encouraged
+- Boost is an encouraged library when functionality is not available in the standard library
+- Use `#pragma once` in the title instead of "include guards"
 
 ## Inline documentation
 
- - We use Doxygen-style comments
- - For future work, use ``TODO(username): description``
- - Add lots of comments to explain complex sections of code
- - Prefer full, descriptive variable names over short letters - e.g. ``robot_state_`` is preferred over ``rs_``
- - If variable types are not immediately clear from context (e.g. from ``make_shared<... >``), avoid using ``auto``
+- We use Doxygen-style comments
+- For future work, use `TODO(username): description`
+- Add lots of comments to explain complex sections of code
+- Prefer full, descriptive variable names over short letters - e.g. `robot_state_` is preferred over `rs_`
+- If variable types are not immediately clear from context (e.g. from `make_shared<... >`), avoid using `auto`
 
 ## Exceptions
- - Catch known exceptions and document them in detail. Avoid using ``catch (...) `` because it hides information about possible failures. We want to know if there is a problem.
 
- - We don’t catch exceptions that don’t derive from ``std::exception``in MoveIt. It is the responsibility of the plugin provider to handle non-``std::exception``-derived exceptions locally.
+- Catch known exceptions and document them in detail. Avoid using `catch (...) ` because it hides information about possible failures. We want to know if there is a problem.
+
+- We don’t catch exceptions that don’t derive from `std::exception`in MoveIt. It is the responsibility of the plugin provider to handle non-`std::exception`-derived exceptions locally.
 
 ## Logging
 
- - Use ROS logging functions and namespaces like: ``ROS_INFO_NAMED(LOGNAME, "Starting listener... ``.
-   - This makes it easier to understand where the output is coming from on the command line, and allows more detailed filtering of the terminal output.
-   - The log namespace should be defined as a ``const`` variable. (For example: ``constexpr char LOGNAME[] = "robot_state";``)
-   - Using the filename as the LOGNAMED namespace is optimal, i.e. ``hardware_interface.cpp`` will use ``"hardware_interface"``
-   - Avoid using the package name as a namespace, as it will already be logged out.
+- Use ROS logging functions and namespaces like: `ROS_INFO_NAMED(LOGNAME, "Starting listener... `.
+  - This makes it easier to understand where the output is coming from on the command line, and allows more detailed filtering of the terminal output.
+  - The log namespace should be defined as a `const` variable. (For example: `constexpr char LOGNAME[] = "robot_state";`)
+  - Using the filename as the LOGNAMED namespace is optimal, i.e. `hardware_interface.cpp` will use `"hardware_interface"`
+  - Avoid using the package name as a namespace, as it will already be logged out.
 
 ## Deprecation
 
- - Deprecated functions use the C++14 [ ``[[deprecated]]`` ](https://en.cppreference.com/w/cpp/language/attributes/deprecated) attribute
- - Add a useful message to describe how to handle this situation.
+- Deprecated functions use the C++14 [ `[[deprecated]]` ](https://en.cppreference.com/w/cpp/language/attributes/deprecated) attribute
+- Add a useful message to describe how to handle this situation.
 
 ```cpp
 [[deprecated("use bar instead")]] void foo() {}
@@ -55,11 +55,12 @@ This will result in.
 
       warning: 'foo' is deprecated: use bar instead [-Wdeprecated-declarations] foo(); ^ note: 'foo' has been explicitly marked deprecated here void foo() { } ^
 
- - Add an associated TODO describing when the feature will be removed (date and/or ROS version)
+- Add an associated TODO describing when the feature will be removed (date and/or ROS version)
 
 ## Shared Ptrs
-  - For creating ``shared_ptr`` of any object, use MoveIt’s standard `macro` ``MOVEIT_CLASS_FORWARD(ClassName)`` before the class declaration, and add the include ``#include <moveit/macros/class_forward.h>``. This will create two typedefs of shared pointers - ``<ClassName>Ptr`` and ``<ClassName>ConstPtr`` using either ``boost`` or ``std``.
-  
+
+- For creating `shared_ptr` of any object, use MoveIt’s standard `macro` `MOVEIT_CLASS_FORWARD(ClassName)` before the class declaration, and add the include `#include <moveit/macros/class_forward.h>`. This will create two typedefs of shared pointers - `<ClassName>Ptr` and `<ClassName>ConstPtr` using either `boost` or `std`.
+
 ## pre-commit format checker
 
 In many of our repositories, there is a [pre-commit](https://pre-commit.com/) check that runs in CI.
@@ -117,7 +118,8 @@ Too much of a headache to use the command line? Try [CLion IDE configuration](. 
 :::
 
 ### QtCreator Editor Configuration
-- Navigate to ``Tools > Options > Beautifier`` On the ``General`` tab, enable auto format on file save, using ``ClangFormat``. On the ``Clang Format`` tab, configure ``clang-format-10`` as your executable and choose ``Use predefined style`` from ``File``.
+
+- Navigate to `Tools > Options > Beautifier` On the `General` tab, enable auto format on file save, using `ClangFormat`. On the `Clang Format` tab, configure `clang-format-10` as your executable and choose `Use predefined style` from `File`.
 
 ## clang-tidy Linting
 
@@ -137,7 +139,9 @@ for file in $(find $CATKIN_WS/build -name compile_commands.json) ; do
 	run-clang-tidy -fix -header-filter="$CATKIN_WS/. *" -p $(dirname $file)
 done
 ```
+
 You can also run it on the selected folder or package file by specifying a regular expression to match the file name: ``sh
+
 ```sh
 run-clang-tidy -fix -header-filter="$CATKIN_WS/. *" -p $CATKIN_WS/build/rm_hw rm_hw
 ```
@@ -147,6 +151,7 @@ will only fix one at a time. So be sure to run the above command multiple times 
 
 If you are only interested in warnings, clang-tidy can also be run directly during the build.
 You can do specific clang-tidy builds with the following command.
+
 ```
 catkin config --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_CXX_CLANG_TIDY=clang-tidy
 catkin build
@@ -181,4 +186,3 @@ for (const int & item : container)
 ## Credits
 
 This file come from the [MoveIt Code Style Guidelines](https://moveit.ros.org/documentation/contributing/code/).
-
