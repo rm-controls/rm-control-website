@@ -17,7 +17,7 @@ import TabItem from '@theme/TabItem';
 
 ### 从包安装
 
-    sudo apt install ros-noetic-rm-rm_gazebo ros-noetic-rm-description
+    sudo apt install ros-noetic-rm-gazebo ros-noetic-rm-description
 
 ### 从源编译
 
