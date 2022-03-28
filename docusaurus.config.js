@@ -29,6 +29,18 @@ module.exports = {
       },
     },
   },
+  themes: [
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      {
+        hashed: true,
+        language: ["en", "zh"],
+        docsRouteBasePath: "/",
+        docsDir: "current_docs",
+        indexBlog: false,
+      },
+    ],
+  ],
   themeConfig: {
     announcementBar: {
       id: "star",
@@ -109,17 +121,5 @@ module.exports = {
       crossorigin: "anonymous",
     },
   ],
-  plugins: [
-    "docusaurus-plugin-sass",
-    [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
-      {
-        hashed: true,
-        language: ["en", "zh"],
-        docsRouteBasePath: "/",
-        docsDir: "current_docs",
-        indexBlog: false,
-      },
-    ],
-  ],
+  plugins: ["docusaurus-plugin-sass"],
 };
