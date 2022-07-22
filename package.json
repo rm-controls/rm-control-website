@@ -22,7 +22,7 @@
     "@easyops-cn/docusaurus-search-local": "^0.19.1",
     "@eightshift/frontend-libs": "^5.0.0",
     "@mdx-js/react": "^1.6.21",
-    "@svgr/webpack": "^5.5.0",
+    "@svgr/webpack": "^6.3.1",
     "clsx": "^1.1.1",
     "docusaurus-plugin-sass": "^0.2.1",
     "file-loader": "^6.2.0",
