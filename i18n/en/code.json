@@ -184,23 +184,23 @@
     "description": "The title of the tag list page"
   },
   "homepage.getStarted.rmControls101": {
-    "message": "在仿真与实物中使用 {highlighted}"
+    "message": "Using in simulation and in actual {highlighted}"
   },
   "homepage.getStarted.gazeboChassis": {
-    "message": "在 {highlighted} 中操控麦克纳姆轮以及舵轮底盘"
+    "message": "Control McNamee wheels and rudder wheel chassis in {highlighted}"
   },
   "homepage.getStarted.headingTitle": {
-    "message": "选择一种入门的方式",
+    "message": "Choose a way to get started",
     "description": "The Heading title"
   },
   "homepage.getStarted.headingSubtitle": {
-    "message": "你可以通过手上常用的 RM3508 电机学习如何在仿真和现实中使用 rm-controls；如果你觉得单个电机过于简单，可以尝试在仿真中操控麦克纳姆轮和舵轮底盘",
+    "message": "You can learn how to use rm-controls in simulation and in reality with the commonly used RM3508 motors on hand; if you find individual motors too simple, try manipulating McNamee wheels and rudder wheel chassis in simulation",
     "description": "The Heading subtitle"
   },
   "homepage.intro1": {
-    "message": "电控方案"
+    "message": "Electronic Control Solutions"
   },
   "homepage.intro": {
-    "message": "一套在 PC 上运行的无下位机、视控一体软件和配套硬件，基于 ros-controls 的硬件和仿真接口以及配套的控制器，用于开发 RoboMaster 机器人和高性能机器人。"
+    "message": "A set of PC-running, PC-free, all-in-one software and supporting hardware, ros-controls-based hardware and simulation interfaces, and supporting controllers for the development of RoboMaster robots and high-performance robots."
   }
 }
