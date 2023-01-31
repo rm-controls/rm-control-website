@@ -242,6 +242,7 @@ bus:
   - can0
 loop_frequency: 1000
 cycle_time_error_threshold: 0.001
+thread_priority: 95
 
 actuators:
   joint1_motor:
