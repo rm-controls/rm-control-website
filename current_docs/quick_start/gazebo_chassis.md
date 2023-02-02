@@ -121,22 +121,25 @@ Controller manager。在 namespace 中选择/controller_manager 可以看到出�
 #### 设置底盘的各种参数
 
 ```shell
-rostopic pub /controllers/chassis_controller/command rm_msgs/ChassisCmd "mode: 1
+rostopic pub /controllers/chassis_controller/command rm_msgs/ChassisCmd "mode: 0
 accel:
   linear: {x: 3.0, y: 3.0, z: 0.0}
   angular: {x: 0.0, y: 0.0, z: 4.0}
 power_limit: 200.0
 follow_source_frame: ''
+command_source_frame: ''
 stamp: {secs: 0, nsecs: 0}"
 ```
 
-在`mode`中，设置底盘运动模式为`FOLLOW`；
+在`mode`中，设置底盘运动模式为`RAW`；
 
 在`accel`中，设置底盘线加速度 x 轴和 y 轴方向上为 3m/s2，角加速度为 4rad/s2；
 
 在`power_limit`中， 设置底盘功率限制为 200；
 
 在`follow_source_frame`中，设置底盘跟随的坐标系（默认为`yaw`）。
+
+在`command_source_frame`中，设置速度指令在哪个坐标系下（默认为`yaw`），此参数在RAW模式下无效。
 
 #### 操控底盘运动
 
@@ -162,8 +165,8 @@ angular:
 
 #### mode 的设置
 
-1. 0 代表 RAW 模式，是底盘的初始状态，x`，此模式下底盘无法运动。
-2. 1 代表 FOLLOW 模式，底盘跟随设定坐标系移动，底盘正面（即底盘坐标的 x 轴方向）与设定坐标系的 x 轴同向（默认跟随 map 轴）。
+1. 0 代表 RAW 模式，在此模式下，来自/cmd_vel的速度指令被看作是底盘坐标系（/base_link）下的速度指令。
+2. 1 代表 FOLLOW 模式，底盘跟随设定坐标系移动，底盘正面（即底盘坐标的 x 轴方向）与设定坐标系的 x 轴同向（默认跟随yaw坐标系）。
 3. 2 代表 GYRO 模式，小陀螺模式下，底盘的直线运动会跟随设置的坐标系运动，同时自身能够旋转。
 4. T3 代表 TWIST 模式，扭腰状态下，底盘正面将以刁钻角度面对敌方机器人（很难看见装甲板的角度），并且底盘不断小幅度旋转以防止敌方机器人击中我方机器人。
 
@@ -182,6 +185,7 @@ accel:
   angular: {x: 0.0, y: 0.0, z: 3.0}
 power_limit: 200.0
 follow_source_frame: 'map'
+command_source_frame: 'map'
 stamp: {secs: 0, nsecs: 0}"
 ```
 
@@ -213,6 +217,7 @@ accel:
   angular: {x: 0.0, y: 0.0, z: 0.0}
 power_limit: 200.0
 follow_source_frame: 'map'
+command_source_frame: 'map'
 stamp: {secs: 0, nsecs: 0}"
 ```
 
