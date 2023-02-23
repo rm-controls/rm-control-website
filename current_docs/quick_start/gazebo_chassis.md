@@ -101,7 +101,7 @@ catkin build
 
 ```
  mon launch robot_state_controller load_controllers.launch  
- mon launch rm_chassis_controllers load_controllers.launch chassis_type:=omni
+ mon launch rm_chassis_controllers load_controllers.launch chassis_type:=mecanum
 ```
 
 :::tip
