@@ -89,7 +89,7 @@ values={[
 进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中拉取本次教程所要用到的仿真包 `rm_chassis_controllers`，并使用 `rosdep` 安装包的依赖。
 
 ```shell
-cd ~/ws_ws/src
+cd ~/rm_ws/src
 git clone https://github.com/rm-controls/rm_controllers.git
 rosdep install --from-paths . --ignore-src
 catkin build
@@ -100,9 +100,13 @@ catkin build
 #### 加载底盘控制器
 
 ```
- mon launch robot_state_controller load_controllers.launch
- mon launch rm_chassis_controllers load_controllers.launch
+ mon launch robot_state_controller load_controllers.launch  
+ mon launch rm_chassis_controllers load_controllers.launch chassis_type:=mecanum
 ```
+
+:::tip
+选择导入舵轮仿真底盘时，请在load rm_chassis_controllers时选择 `chassis_type:=swerve` 。
+:::
 
 #### 在 rqt 中的 Controller manager 中启动相关控制器
 
@@ -168,7 +172,7 @@ angular:
 1. 0 代表 RAW 模式，在此模式下，来自/cmd_vel的速度指令被看作是底盘坐标系（/base_link）下的速度指令。
 2. 1 代表 FOLLOW 模式，底盘跟随设定坐标系移动，底盘正面（即底盘坐标的 x 轴方向）与设定坐标系的 x 轴同向（默认跟随yaw坐标系）。
 3. 2 代表 GYRO 模式，小陀螺模式下，底盘的直线运动会跟随设置的坐标系运动，同时自身能够旋转。
-4. T3 代表 TWIST 模式，扭腰状态下，底盘正面将以刁钻角度面对敌方机器人（很难看见装甲板的角度），并且底盘不断小幅度旋转以防止敌方机器人击中我方机器人。
+4. 3 代表 TWIST 模式，扭腰状态下，底盘正面将以刁钻角度面对敌方机器人（很难看见装甲板的角度），并且底盘不断小幅度旋转以防止敌方机器人击中我方机器人。
 
 详见[rm_chassis_controllers/README](https://github.com/rm-controls/rm_controllers/blob/master/rm_chassis_controllers/README.md)
 
@@ -209,15 +213,14 @@ angular:
 #### 示例 2： 底盘的扭腰模式
 
 设置底盘模式为`TWIST`，并设置好加速度
-
 ```shell
 rostopic pub /controllers/chassis_controller/command rm_msgs/ChassisCmd "mode: 3
 accel:
   linear: {x: 3.0, y: 3.0, z: 0.0}
-  angular: {x: 0.0, y: 0.0, z: 0.0}
+  angular: {x: 0.0, y: 0.0, z: 3.0}
 power_limit: 200.0
-follow_source_frame: 'map'
-command_source_frame: 'map'
+follow_source_frame: 'odom'
+command_source_frame: 'odom'
 stamp: {secs: 0, nsecs: 0}"
 ```
 
