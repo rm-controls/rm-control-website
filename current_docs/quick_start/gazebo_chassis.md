@@ -15,11 +15,18 @@ import TabItem from '@theme/TabItem';
 
 ## 运行仿真
 
-### 从包安装
+### 安装机器人仿真包
 
     sudo apt install ros-noetic-rm-gazebo ros-noetic-rm-description
 
-### 从源编译
+
+### 安装rm_control
+
+:::tip
+以下两种安装方式选择其一即可。
+:::
+
+#### 1.从源编译
 
 进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中拉取本 `rm_control`，并使用 `rosdep` 安装包的依赖，并编译。
 
@@ -29,11 +36,15 @@ git clone https://github.com/rm-controls/rm_control.git
 rosdep install --from-paths . --ignore-src
 catkin build
 ```
-
 :::tip
 必须确保你的 `rosdep` 安装和初始化是正确的。
 :::
 
+
+#### 2.从包安装
+
+    sudo apt install ros-noetic-rm-control
+    
 :::caution
 你**应该**在你的日常开发电脑中执行下述操作；而**不**在机器人上的计算设备上面安装仿真以及可视化相关的包，更不要在上面运行仿真。
 :::
@@ -66,30 +77,12 @@ values={[
 
 ## 运行控制器
 
-### 从包安装
-
-#### 设置环境变量
-
-<Tabs
-groupId="operating-systems"
-defaultValue="麦克纳姆轮"
-values={[
-{label: '舵轮', value: '舵轮'},
-{label: '麦克纳姆轮', value: '麦克纳姆轮'},
-]
-}>
-<TabItem value="麦克纳姆轮">export ROBOT_TYPE=hero</TabItem>
-<TabItem value="舵轮">export ROBOT_TYPE=standard4</TabItem>
-</Tabs>
-输入以上指令可以选择仿真底盘的类型。
-<br/>
-
 #### 拉取包并安装依赖
 
 进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中拉取本次教程所要用到的仿真包 `rm_chassis_controllers`，并使用 `rosdep` 安装包的依赖。
 
 ```shell
-cd ~/ws_ws/src
+cd ~/rm_ws/src
 git clone https://github.com/rm-controls/rm_controllers.git
 rosdep install --from-paths . --ignore-src
 catkin build
@@ -99,10 +92,31 @@ catkin build
 
 #### 加载底盘控制器
 
+<Tabs
+groupId="operating-systems"
+defaultValue="麦克纳姆轮"
+values={[
+{label: '舵轮', value: '舵轮'},
+{label: '麦克纳姆轮', value: '麦克纳姆轮'},
+]
+}>
+
+<TabItem value="麦克纳姆轮">
+
 ```
  mon launch robot_state_controller load_controllers.launch
- mon launch rm_chassis_controllers load_controllers.launch
+ mon launch rm_chassis_controllers load_controllers.launch chassis_type:=mecanum
 ```
+</TabItem>
+
+<TabItem value="舵轮">
+
+```
+ mon launch robot_state_controller load_controllers.launch
+ mon launch rm_chassis_controllers load_controllers.launch chassis_type:=swerve
+```
+</TabItem></Tabs>
+
 
 #### 在 rqt 中的 Controller manager 中启动相关控制器
 
@@ -168,7 +182,7 @@ angular:
 1. 0 代表 RAW 模式，在此模式下，来自/cmd_vel的速度指令被看作是底盘坐标系（/base_link）下的速度指令。
 2. 1 代表 FOLLOW 模式，底盘跟随设定坐标系移动，底盘正面（即底盘坐标的 x 轴方向）与设定坐标系的 x 轴同向（默认跟随yaw坐标系）。
 3. 2 代表 GYRO 模式，小陀螺模式下，底盘的直线运动会跟随设置的坐标系运动，同时自身能够旋转。
-4. T3 代表 TWIST 模式，扭腰状态下，底盘正面将以刁钻角度面对敌方机器人（很难看见装甲板的角度），并且底盘不断小幅度旋转以防止敌方机器人击中我方机器人。
+4. 3 代表 TWIST 模式，扭腰状态下，底盘正面将以刁钻角度面对敌方机器人（很难看见装甲板的角度），并且底盘不断小幅度旋转以防止敌方机器人击中我方机器人。
 
 详见[rm_chassis_controllers/README](https://github.com/rm-controls/rm_controllers/blob/master/rm_chassis_controllers/README.md)
 
@@ -214,10 +228,10 @@ angular:
 rostopic pub /controllers/chassis_controller/command rm_msgs/ChassisCmd "mode: 3
 accel:
   linear: {x: 3.0, y: 3.0, z: 0.0}
-  angular: {x: 0.0, y: 0.0, z: 0.0}
+  angular: {x: 0.0, y: 0.0, z: 3.0}
 power_limit: 200.0
-follow_source_frame: 'map'
-command_source_frame: 'map'
+follow_source_frame: 'odom'
+command_source_frame: 'odom'
 stamp: {secs: 0, nsecs: 0}"
 ```
 
