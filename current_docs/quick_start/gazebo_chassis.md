@@ -15,11 +15,18 @@ import TabItem from '@theme/TabItem';
 
 ## 运行仿真
 
-### 从包安装
+### 安装机器人仿真包
 
     sudo apt install ros-noetic-rm-gazebo ros-noetic-rm-description
 
-### 从源编译
+
+### 安装rm_control
+
+:::tip
+以下两种安装方式选择其一即可。
+:::
+
+#### 1.从源编译
 
 进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中拉取本 `rm_control`，并使用 `rosdep` 安装包的依赖，并编译。
 
@@ -29,11 +36,15 @@ git clone https://github.com/rm-controls/rm_control.git
 rosdep install --from-paths . --ignore-src
 catkin build
 ```
-
 :::tip
 必须确保你的 `rosdep` 安装和初始化是正确的。
 :::
 
+
+#### 2.从包安装
+
+    sudo apt install ros-noetic-rm-control
+    
 :::caution
 你**应该**在你的日常开发电脑中执行下述操作；而**不**在机器人上的计算设备上面安装仿真以及可视化相关的包，更不要在上面运行仿真。
 :::
@@ -66,24 +77,6 @@ values={[
 
 ## 运行控制器
 
-### 从包安装
-
-#### 设置环境变量
-
-<Tabs
-groupId="operating-systems"
-defaultValue="麦克纳姆轮"
-values={[
-{label: '舵轮', value: '舵轮'},
-{label: '麦克纳姆轮', value: '麦克纳姆轮'},
-]
-}>
-<TabItem value="麦克纳姆轮">export ROBOT_TYPE=hero</TabItem>
-<TabItem value="舵轮">export ROBOT_TYPE=standard4</TabItem>
-</Tabs>
-输入以上指令可以选择仿真底盘的类型。
-<br/>
-
 #### 拉取包并安装依赖
 
 进入你的工作空间（假设名为 `rm_ws`），在你的工作空间中拉取本次教程所要用到的仿真包 `rm_chassis_controllers`，并使用 `rosdep` 安装包的依赖。
@@ -99,13 +92,31 @@ catkin build
 
 #### 加载底盘控制器
 
+<Tabs
+groupId="operating-systems"
+defaultValue="麦克纳姆轮"
+values={[
+{label: '舵轮', value: '舵轮'},
+{label: '麦克纳姆轮', value: '麦克纳姆轮'},
+]
+}>
+
+<TabItem value="麦克纳姆轮">
+
 ```
  mon launch robot_state_controller load_controllers.launch
  mon launch rm_chassis_controllers load_controllers.launch chassis_type:=mecanum
 ```
-:::tip
-选择载入舵轮底盘时，控制器类型应选择 `chassis_type:=swerve` 。
-:::
+</TabItem>
+
+<TabItem value="舵轮">
+
+```
+ mon launch robot_state_controller load_controllers.launch
+ mon launch rm_chassis_controllers load_controllers.launch chassis_type:=swerve
+```
+</TabItem></Tabs>
+
 
 #### 在 rqt 中的 Controller manager 中启动相关控制器
 
@@ -217,7 +228,7 @@ angular:
 rostopic pub /controllers/chassis_controller/command rm_msgs/ChassisCmd "mode: 3
 accel:
   linear: {x: 3.0, y: 3.0, z: 0.0}
-  angular: {x: 0.0, y: 0.0, z: 0.3}
+  angular: {x: 0.0, y: 0.0, z: 3.0}
 power_limit: 200.0
 follow_source_frame: 'odom'
 command_source_frame: 'odom'
